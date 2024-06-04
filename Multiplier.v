@@ -3,7 +3,7 @@
 //==============================================================================
 
 `include "MultiplierControl.v"
-// include datapath
+`include "MultiplierDatapath.v"
 
 module Mutiplier(
 	input   clk,
