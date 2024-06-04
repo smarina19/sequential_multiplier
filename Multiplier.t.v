@@ -33,17 +33,13 @@ module MultiplierTest;
 	reg [7:0] errors = 0;
 
 	// VCD Dump
-	integer idx;
 	initial begin
 		$dumpfile("MultiplierTest.vcd");
 		$dumpvars;
-		for (idx = 0; idx < 64; idx = idx + 1) begin
-			$dumpvars(0, multiplier.dpath.mem.mem[idx]);
-		end
 	end
 
 	// Multiplier Module
-	Multiplier multiplier(
+	Multiplier multipliertester(
         .clk    (clk),
 		.rst    (rst),
         .start  (start),
@@ -79,8 +75,7 @@ module MultiplierTest;
         `CLOCK;
         `CLOCK;
         `CLOCK;
-        `ASSERT_EQ(product, 8'b00010010, "Product is incorrect")
-
+        `ASSERT_EQ(product, 8'b00010010, "Product is incorrect");
 		$display("\nTESTS COMPLETED (%d FAILURES)", errors);
 		$finish;
 	end

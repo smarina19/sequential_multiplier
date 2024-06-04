@@ -5,7 +5,7 @@
 `include "MultiplierControl.v"
 `include "MultiplierDatapath.v"
 
-module Mutiplier(
+module Multiplier(
 	input   clk,
 	input   rst,
     input   start,
