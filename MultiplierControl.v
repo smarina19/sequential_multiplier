@@ -8,6 +8,9 @@ module MultiplierControl(
     input   rst,           // reset
 	input   start,
 
+    // External Output
+    output reg productDone,
+
 	// Outputs to Datapath
 	output reg  rsload,
 	output reg  rsclear,
@@ -19,7 +22,7 @@ module MultiplierControl(
 	input   mr0,
 	input	mr1,
 	input	mr2,
-    input   mr3 // coloring off?
+    input   mr3 
 );
 	// Local Vars
 	reg [3:0] state;
@@ -46,6 +49,7 @@ module MultiplierControl(
         rsshr = 0;
         mrld = 0;
         mdld = 0;
+        productDone = 0;
 
 		case (state)
 			INIT: begin
@@ -76,6 +80,7 @@ module MultiplierControl(
             end
             FINAL: begin
                 rsshr = 1;
+                productDone = 1;
             end
 		endcase
 	end
