@@ -1,5 +1,6 @@
 //===============================================================================
 // Testbench Module for Multiplier
+// some code adapted from ECE206 testing material
 //===============================================================================
 `timescale 1ns/100ps
 
@@ -48,11 +49,12 @@ module MultiplierTest;
         .product (product)
 	);
 
+    integer i;
 	// Main Test Logic
 	initial begin
         // 0110 x 0011
-        `SET(multiplier, 4'b0110)
-        `SET(multiplicand, 4'b0011)
+        `SET(multiplier, 4'b0011)
+        `SET(multiplicand, 4'b0110)
 
 		// Reset the multiplier
 		`SET(rst, 1);
@@ -65,17 +67,83 @@ module MultiplierTest;
 
         // INIT State - should take at most 10 clock cycles to get back to START
         `SET(start, 0);
-		`CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
-        `CLOCK;
+        for (i = 0; i < 10; i = i + 1) begin
+            `CLOCK;
+        end
         `ASSERT_EQ(product, 8'b00010010, "Product is incorrect");
+
+        // 15 x 15
+        `SET(multiplier, 4'd15)
+        `SET(multiplicand, 4'd15)
+
+		`SET(rst, 1);
+		`CLOCK;
+
+		`SET(rst, 0);
+        `SET(start, 1);
+        `CLOCK;
+
+        `SET(start, 0);
+
+        for (i = 0; i < 10; i = i + 1) begin
+            `CLOCK;
+        end
+        `ASSERT_EQ(product, 8'd225, "Product is incorrect");
+
+        // 0 x 12
+        `SET(multiplier, 4'd0)
+        `SET(multiplicand, 4'd12)
+
+		`SET(rst, 1);
+		`CLOCK;
+
+		`SET(rst, 0);
+        `SET(start, 1);
+        `CLOCK;
+
+        `SET(start, 0);
+
+        for (i = 0; i < 10; i = i + 1) begin
+            `CLOCK;
+        end
+        `ASSERT_EQ(product, 8'd0, "Product is incorrect");
+
+        // 1 x 2
+        `SET(multiplier, 4'd1)
+        `SET(multiplicand, 4'd2)
+
+		`SET(rst, 1);
+		`CLOCK;
+
+		`SET(rst, 0);
+        `SET(start, 1);
+        `CLOCK;
+
+        `SET(start, 0);
+
+        for (i = 0; i < 10; i = i + 1) begin
+            `CLOCK;
+        end
+        `ASSERT_EQ(product, 8'd2, "Product is incorrect");
+
+        // 0 x 0 
+        `SET(multiplier, 4'd0)
+        `SET(multiplicand, 4'd0)
+
+		`SET(rst, 1);
+		`CLOCK;
+
+		`SET(rst, 0);
+        `SET(start, 1);
+        `CLOCK;
+
+        `SET(start, 0);
+
+        for (i = 0; i < 10; i = i + 1) begin
+            `CLOCK;
+        end
+        `ASSERT_EQ(product, 8'd0, "Product is incorrect");
+
 		$display("\nTESTS COMPLETED (%d FAILURES)", errors);
 		$finish;
 	end
