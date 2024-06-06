@@ -1,3 +1,10 @@
+analyze -sv Multiplier.v
+
+elaborate -top Multiplier
+
+clock clk
+reset rst
+
 # productDone is high 7-11 clock cycles after start is high
 assert {start |-> ##[7:11] productDone};
 
