@@ -12,7 +12,7 @@ assert {rst |-> ##[7:11] productDone};
 assert {multiplierReg[3]==0 && multiplicandReg[7]==0 && productDone -> product[7]==0}
 
 # if multiplier positive and multiplicand negative, product is negative
-assert {multiplierReg[3] == 0 && multiplierReg != 0 && multiplicandReg[3]==1 -> product[7]==1}
+assert {multiplierReg[3] == 0 && multiplierReg != 0 && multiplicandReg[3]==1 && productDone -> product[7]==1}
 
 # if both negative, product is nonnegative
 assert {multiplierReg[3]==1 && multiplicandReg[7]==1 && productDone -> product[7]==0}
