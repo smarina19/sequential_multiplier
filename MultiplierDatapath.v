@@ -23,13 +23,13 @@ module MultiplierDatapath(
     output wire   mr0,
     output wire   mr1,
     output wire   mr2,    
-    output wire   mr3
-);
+    output wire   mr3,
 
-// Local Registers 
-    reg [3:0] multiplierReg;
-    reg [8:0] runningSumReg;
-    reg [8:0] multiplicandReg;
+    // debug outputs
+    output reg [3:0] multiplierReg,
+    output reg [8:0] runningSumReg,
+    output reg [8:0] multiplicandReg
+);
 
 // Output Wires
     assign mr3 = multiplierReg[3];

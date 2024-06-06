@@ -25,6 +25,9 @@ module Multiplier(
     wire mr1;
     wire mr2;
     wire mr3;
+    wire [3:0] multiplierReg;
+    wire [8:0] runningSumReg;
+    wire [8:0] multiplicandReg;
 
 	// Datapath -- check port connections/rename
 	MultiplierDatapath dpath(
@@ -40,7 +43,10 @@ module Multiplier(
         .mr1 (mr1),
         .mr2 (mr2),
         .mr3 (mr3),
-        .product (product)
+        .product (product),
+        .multiplierReg(multiplierReg),
+        .runningSumReg(runningSumReg),
+        .multiplicandReg(multiplicandReg)
 	);
 
 	// Control
