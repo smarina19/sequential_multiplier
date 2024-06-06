@@ -28,7 +28,7 @@ module MultiplierTest;
 	reg start = 0;
 	reg [3:0] multiplier = 4'd0;
 	reg [3:0] multiplicand = 4'd0;
-    wire [7:0] product;
+    wire [8:0] product;
 
 	// Error Counts
 	reg [7:0] errors = 0;

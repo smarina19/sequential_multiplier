@@ -55,6 +55,7 @@ always @( posedge clk) begin
     if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
     end
+    // how do we know what to shift in here for sign?
     if(rsshr) begin
         runningSumReg <= runningSumReg >>> 1'b1; 
     end
