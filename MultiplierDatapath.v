@@ -56,7 +56,7 @@ always @( posedge clk) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
     end
     if(rsshr) begin
-        runningSumReg <= runningSumReg >> 1'b1; 
+        runningSumReg <= runningSumReg >>> 1'b1; 
     end
 end 
     assign product = runningSumReg;
