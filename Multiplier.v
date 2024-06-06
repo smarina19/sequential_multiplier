@@ -12,7 +12,7 @@ module Multiplier(
     input [3:0] multiplier,
     input [3:0] multiplicand,
 
-	output [7:0] product,
+	output [8:0] product,
     output productDone
 );
 	// Declare local connections here

@@ -10,7 +10,7 @@ module MultiplierDatapath(
     input wire [3:0] multiplicand,
 
     // External Output
-    output wire [7:0] product,
+    output wire [8:0] product,
 
     // Inputs from Controller
     input rsload,
