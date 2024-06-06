@@ -12,7 +12,8 @@ module Multiplier(
     input [3:0] multiplier,
     input [3:0] multiplicand,
 
-	output [7:0] product
+	output [7:0] product,
+    output productDone
 );
 	// Declare local connections here
 	wire rsload;
@@ -55,7 +56,8 @@ module Multiplier(
         .mr0 (mr0),
         .mr1 (mr1),
         .mr2 (mr2),
-        .mr3 (mr3)
+        .mr3 (mr3),
+        .productDone (productDone)
 	);
 
 endmodule
