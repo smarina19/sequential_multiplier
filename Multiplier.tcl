@@ -17,4 +17,17 @@ assert {multiplierReg[3] == 0 && multiplierReg != 0 && multiplicandReg[3]==1 && 
 # if both negative, product is nonnegative
 assert {multiplierReg[3]==1 && multiplicandReg[7]==1 && productDone -> product[8]==0}
 
+#result should always be 
+
+#if at least one number is even the product should be even
+assert {((multiplierReg/2) % 0) == 0 && ((multiplicandReg/2) % 0) != 0 && productDone -> product[8]==0}
+
+#if both even the product should be even
+assert {((multiplierReg/2) % 0) == 0 && ((multiplicandReg/2) % 0) == 0 && productDone -> product[8]==0}
+
+#if both odd the product should be odd
+assert {((multiplierReg/2) % 0) != 0 && ((multiplicandReg/2) % 0) != 0 && productDone -> product[8]==0}
+
+
+
 prove -all
