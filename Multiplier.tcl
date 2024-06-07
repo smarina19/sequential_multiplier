@@ -19,15 +19,13 @@ assert {multiplierReg[3]==1 && multiplicandReg[7]==1 && productDone -> product[8
 
 #result should always be 
 
-#if at least one number is even the product should be even
-assert {((multiplierReg) % 2) == 0 && ((multiplicandReg) % 2) != 0 && productDone -> ((product) % 2) ==0}
+#if one number is even the product should be even
+assert {multiplierReg[0] == 0 && multiplicandReg[0] != 0 && productDone -> product[0] == 0}
 
 #if both even the product should be even
-assert {((multiplierReg) % 2) == 0 && ((multiplicandReg) % 2) == 0 && productDone -> (product % 2) ==0}
+assert {multiplierReg[0]== 0 && multiplicandReg[0]== 0 && productDone -> product[0]==0}
 
 #if both odd the product should be odd
-assert {((multiplierReg) % 2) != 0 && ((multiplicandReg) % 2) != 0 && productDone -> ((product/2) % 2) !=0}
-
-
+assert {multiplierReg[0] != 0 && multiplicandReg[0] != 0 && productDone -> product[0] !=0}
 
 prove -all
