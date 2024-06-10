@@ -13,7 +13,7 @@ module MultiplierTester(
     input [3:0] multiplierTwo,
     input [3:0] multiplicandTwo,
 
-    // these outputs assume the multiplicands are held constant\
+    // these outputs assume the public inputs (multiplicand) are held constant
     // between both multipliers through an assumption
     output timingLeak,
     output timingLeakDone
