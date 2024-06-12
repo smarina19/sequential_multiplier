@@ -5,14 +5,14 @@
 `include "MultiplierControl.v"
 `include "MultiplierDatapath.v"
 
-module Multiplier(
+module Multiplier #(parameter WIDTH = 4)(
 	input   clk,
 	input   rst,
     input   start,
-    input [3:0] multiplier,
-    input [3:0] multiplicand,
+    input [WIDTH - 1:0] multiplier,
+    input [WIDTH - 1:0] multiplicand,
 
-	output [8:0] product,
+	output [2*WIDTH - 1:0] product,
     output productDone
 );
 	// Declare local connections here
@@ -25,12 +25,12 @@ module Multiplier(
     wire mr1;
     wire mr2;
     wire mr3;
-    wire [3:0] multiplierReg;
-    wire [8:0] runningSumReg;
-    wire [8:0] multiplicandReg;
+    wire [WIDTH - 1:0] multiplierReg;
+    wire [WIDTH * 2:0] runningSumReg;
+    wire [WIDTH * 2:0] multiplicandReg;
 
 	// Datapath -- check port connections/rename
-	MultiplierDatapath dpath(
+	MultiplierDatapath #(WIDTH) dpath(
 		.clk    (clk),
         .multiplier (multiplier),
         .multiplicand (multiplicand),
@@ -39,10 +39,6 @@ module Multiplier(
         .rsshr (rsshr),
         .mrld (mrld),
         .mdld (mdld),
-        .mr0 (mr0),
-        .mr1 (mr1),
-        .mr2 (mr2),
-        .mr3 (mr3),
         .product (product),
         .multiplierReg(multiplierReg),
         .runningSumReg(runningSumReg),
@@ -50,7 +46,7 @@ module Multiplier(
 	);
 
 	// Control
-	MultiplierControl ctrl(
+	MultiplierControl #(WIDTH) ctrl(
 		.clk  (clk),
 		.rst  (rst),
         .start (start),
@@ -59,10 +55,7 @@ module Multiplier(
         .rsshr (rsshr),
         .mrld (mrld),
         .mdld (mdld),
-        .mr0 (mr0),
-        .mr1 (mr1),
-        .mr2 (mr2),
-        .mr3 (mr3),
+        .multiplierReg(multiplierReg),
         .productDone (productDone)
 	);
 

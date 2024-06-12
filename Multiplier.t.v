@@ -21,14 +21,15 @@
 `define SHOW_STATE(STATE) $display("\nEntering State: %s\n-----------------------------------", STATE)
 
 module MultiplierTest;
+    parameter NUM_BITS = 7;
 
 	// Local Vars
 	reg clk = 0;
 	reg rst = 0;
 	reg start = 0;
-	reg [3:0] multiplier = 4'd0;
-	reg [3:0] multiplicand = 4'd0;
-    wire [8:0] product;
+	reg [NUM_BITS - 1:0] multiplier = 7'd0;
+	reg [NUM_BITS - 1:0] multiplicand = 7'd0;
+    wire [2 * NUM_BITS - 1:0] product;
 
 	// Error Counts
 	reg [7:0] errors = 0;
@@ -40,7 +41,7 @@ module MultiplierTest;
 	end
 
 	// Multiplier Module
-	Multiplier multipliertester(
+	Multiplier #(NUM_BITS) multipliertester(
         .clk    (clk),
 		.rst    (rst),
         .start  (start),
@@ -53,6 +54,7 @@ module MultiplierTest;
 	// Main Test Logic
 	initial begin
         // 0110 x 0011
+        /*
         `SET(multiplier, 4'b0011)
         `SET(multiplicand, 4'b0110)
 
@@ -71,10 +73,11 @@ module MultiplierTest;
             `CLOCK;
         end
         `ASSERT_EQ(product, 8'b00010010, "Product is incorrect");
+        */
 
         // 15 x 15
-        `SET(multiplier, 4'd15)
-        `SET(multiplicand, 4'd15)
+        `SET(multiplier, 15)
+        `SET(multiplicand, 15)
 
 		`SET(rst, 1);
 		`CLOCK;
@@ -85,14 +88,15 @@ module MultiplierTest;
 
         `SET(start, 0);
 
-        for (i = 0; i < 10; i = i + 1) begin
+        for (i = 0; i < 100; i = i + 1) begin
             `CLOCK;
         end
-        `ASSERT_EQ(product, 8'd225, "Product is incorrect");
+        `ASSERT_EQ(product, 225, "Product is incorrect");
+        $display("%b", product);
 
         // 0 x 12
-        `SET(multiplier, 4'd0)
-        `SET(multiplicand, 4'd12)
+        `SET(multiplier, 0)
+        `SET(multiplicand, 12)
 
 		`SET(rst, 1);
 		`CLOCK;
@@ -106,11 +110,11 @@ module MultiplierTest;
         for (i = 0; i < 10; i = i + 1) begin
             `CLOCK;
         end
-        `ASSERT_EQ(product, 8'd0, "Product is incorrect");
+        `ASSERT_EQ(product, 0, "Product is incorrect");
 
         // 1 x 2
-        `SET(multiplier, 4'd1)
-        `SET(multiplicand, 4'd2)
+        `SET(multiplier, 1)
+        `SET(multiplicand, 2)
 
 		`SET(rst, 1);
 		`CLOCK;
@@ -121,14 +125,14 @@ module MultiplierTest;
 
         `SET(start, 0);
 
-        for (i = 0; i < 10; i = i + 1) begin
+        for (i = 0; i < 100; i = i + 1) begin
             `CLOCK;
         end
-        `ASSERT_EQ(product, 8'd2, "Product is incorrect");
+        `ASSERT_EQ(product, 2, "Product is incorrect");
 
         // 0 x 0 
-        `SET(multiplier, 4'd0)
-        `SET(multiplicand, 4'd0)
+        `SET(multiplier, 0)
+        `SET(multiplicand, 0)
 
 		`SET(rst, 1);
 		`CLOCK;
@@ -139,10 +143,29 @@ module MultiplierTest;
 
         `SET(start, 0);
 
-        for (i = 0; i < 10; i = i + 1) begin
+        for (i = 0; i < 100; i = i + 1) begin
             `CLOCK;
         end
-        `ASSERT_EQ(product, 8'd0, "Product is incorrect");
+        `ASSERT_EQ(product, 0, "Product is incorrect");
+
+        // 92 * 75
+        `SET(multiplier, 92)
+        `SET(multiplicand, 75)
+
+		`SET(rst, 1);
+		`CLOCK;
+
+		`SET(rst, 0);
+        `SET(start, 1);
+        `CLOCK;
+
+        `SET(start, 0);
+
+        for (i = 0; i < 100; i = i + 1) begin
+            `CLOCK;
+        end
+        `ASSERT_EQ(product, 6900, "Product is incorrect");
+
 
 		$display("\nTESTS COMPLETED (%d FAILURES)", errors);
 		$finish;

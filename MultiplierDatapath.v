@@ -2,15 +2,15 @@
 // Datapath Module for Sequential Multiplier
 //==============================================================================
 
-module MultiplierDatapath(
+module MultiplierDatapath #(parameter WIDTH = 4)(
 
     // External Inputs
     input   clk,       // Clock 
-    input wire [3:0] multiplier,
-    input wire [3:0] multiplicand,
+    input wire [WIDTH - 1:0] multiplier,
+    input wire [WIDTH - 1:0] multiplicand,
 
     // External Output
-    output wire [8:0] product,
+    output wire [WIDTH*2 - 1:0] product,
 
     // Inputs from Controller
     input rsload,
@@ -20,35 +20,25 @@ module MultiplierDatapath(
     input mdld,
 
     // Outputs to Controller
-    output wire   mr0,
-    output wire   mr1,
-    output wire   mr2,    
-    output wire   mr3,
+    output reg [WIDTH - 1:0] multiplierReg,
 
     // debug outputs
-    output reg [3:0] multiplierReg,
-    output reg [8:0] runningSumReg,
-    output reg [8:0] multiplicandReg
+    output reg [WIDTH*2:0] runningSumReg,
+    output reg [WIDTH*2:0] multiplicandReg
 );
-
-// Output Wires
-    assign mr3 = multiplierReg[3];
-    assign mr2 = multiplierReg[2];
-    assign mr1 = multiplierReg[1];
-    assign mr0 = multiplierReg[0];
 
 // Sequential Logic
 always @( posedge clk) begin
     
     // init registers
     if (mdld) begin
-        multiplicandReg <= multiplicand << 3'd4;
+        multiplicandReg <= multiplicand << WIDTH;
     end
     if (mrld) begin
         multiplierReg <= multiplier;
     end
     if (rsclear) begin
-        runningSumReg <= 8'd0;
+        runningSumReg <= 0;
     end
 
     // load running sum
@@ -57,7 +47,7 @@ always @( posedge clk) begin
     end
     // how do we know what to shift in here for sign?
     if(rsshr) begin
-        runningSumReg <= runningSumReg >>> 1'b1; 
+        runningSumReg <= runningSumReg >>> 1; 
     end
 end 
     assign product = runningSumReg;

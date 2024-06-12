@@ -2,7 +2,7 @@
 // Control Module for Sequential Multiplier
 //==============================================================================
 
-module MultiplierControl(
+module MultiplierControl #(parameter WIDTH = 4)(
 	// External Inputs
 	input   clk,           // Clock
     input   rst,           // reset
@@ -19,27 +19,18 @@ module MultiplierControl(
     output reg  mdld,
 
 	// Inputs from Datapath
-	input   mr0,
-	input	mr1,
-	input	mr2,
-    input   mr3 
+    input [WIDTH - 1:0] multiplierReg
 );
 	// Local Vars
-	reg [3:0] state;
-	reg [3:0] next_state;
+	// # of states = 2 * WIDTH + 3
+    localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
+    reg [STATE_WIDTH - 1:0] state;
+	reg [STATE_WIDTH - 1:0] next_state;
 
-	// State Names 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-	localparam BIT_ZERO = 4'd2;
-	localparam BIT_ZERO_TRUE = 4'd3;
-    localparam BIT_ONE = 4'd4;
-    localparam BIT_ONE_TRUE = 4'd5;
-    localparam BIT_TWO = 4'd6;
-    localparam BIT_TWO_TRUE = 4'd7;
-    localparam BIT_THREE = 4'd8;
-    localparam BIT_THREE_TRUE = 4'd9;
-    localparam FINAL = 4'd10;
+    localparam FINAL = 2 * (WIDTH + 1);
+    // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
 
 	// Output Combinational Logic
 	always @( * ) begin
@@ -50,102 +41,51 @@ module MultiplierControl(
         mrld = 0;
         mdld = 0;
         productDone = 0;
-
-		case (state)
-			INIT: begin
-				mdld = 1;
-                mrld = 1;
-                rsclear = 1;
-			end
-			BIT_ZERO_TRUE: begin
-                rsload = 1;
-			end
-            BIT_ONE: begin
-                rsshr = 1;
-            end
-            BIT_ONE_TRUE: begin
-                rsload = 1;
-            end
-            BIT_TWO: begin
-                rsshr = 1;
-            end
-            BIT_TWO_TRUE: begin
-                rsload = 1;
-            end
-            BIT_THREE: begin
-                rsshr = 1;
-            end
-            BIT_THREE_TRUE: begin
-                rsload = 1;
-            end
-            FINAL: begin
-                rsshr = 1;
-                productDone = 1;
-            end
-		endcase
+        if (state == START) begin
+        end
+        else if (state == INIT) begin
+            mdld = 1;
+            mrld = 1;
+            rsclear = 1;
+        end
+        else if (state == FINAL) begin
+            rsshr = 1;
+            productDone = 1;
+        end
+        else if (state[0] == 1) begin
+            rsload = 1;
+        end
+        else begin
+            rsshr = 1;
+        end
 	end
 
 	// Next State Combinational Logic
 	always @( * ) begin
 		next_state = state;
 		
-		case (state)
-		START: begin
+		if (state == START) begin
 			if (start) begin
 				next_state = INIT;
 			end
 		end
-		INIT: begin
-			next_state = BIT_ZERO;
+		else if (state == INIT) begin
+			next_state = 2;
 		end
-		BIT_ZERO: begin
-			if (mr0) begin
-				next_state = BIT_ZERO_TRUE;
-			end
-			else begin
-				next_state = BIT_ONE;
-			end
-		end
-        BIT_ZERO_TRUE: begin
-            next_state = BIT_ONE;
-        end
-        BIT_ONE: begin
-            if (mr1) begin
-                next_state = BIT_ONE_TRUE;
-            end
-            else begin
-                next_state = BIT_TWO;
-            end
-        end
-        BIT_ONE_TRUE: begin
-            next_state = BIT_TWO;
-        end
-        BIT_TWO: begin
-            if (mr2) begin
-                next_state = BIT_TWO_TRUE;
-            end
-            else begin
-                next_state = BIT_THREE;
-            end
-        end
-        BIT_TWO_TRUE: begin
-            next_state = BIT_THREE;
-        end
-        BIT_THREE: begin
-            if (mr3) begin
-                next_state = BIT_THREE_TRUE;
-            end
-            else begin
-                next_state = FINAL;
-            end
-        end
-        BIT_THREE_TRUE: begin
-            next_state = FINAL;
-        end
-        FINAL: begin
+        else if (state == FINAL) begin
             next_state = START;
         end
-		endcase
+        else if (state[0] == 0) begin
+            if (multiplierReg[(state >> 1) - 1]) begin
+                next_state = next_state + 1;
+            end
+            else begin
+                next_state = next_state + 2;
+            end
+        end
+        else begin
+            next_state = next_state + 1;
+        end
 	end
 
 	// State Update Sequential Logic
