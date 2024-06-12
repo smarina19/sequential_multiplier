@@ -4,14 +4,14 @@
 
 `include "Multiplier.v"
 
-module MultiplierTester(
+module MultiplierTester #(parameter WIDTH = 4)(
 	input   clk,
 	input   rst,
     input   start,
-    input [3:0] multiplierOne,
-    input [3:0] multiplicandOne,
-    input [3:0] multiplierTwo,
-    input [3:0] multiplicandTwo,
+    input [WIDTH - 1:0] multiplierOne,
+    input [WIDTH - 1:0] multiplicandOne,
+    input [WIDTH - 1:0] multiplierTwo,
+    input [WIDTH - 1:0] multiplicandTwo,
 
     // these outputs assume the public inputs (multiplicand) are held constant
     // between both multipliers through an assumption
@@ -20,12 +20,12 @@ module MultiplierTester(
 );
 
 // internal wires
-wire [8:0] productOne;
-wire [8:0] productTwo;
+wire [2 * WIDTH - 1:0] productOne;
+wire [2 * WIDTH - 1:0] productTwo;
 wire productDoneOne;
 wire productDoneTwo;
 
-Multiplier multOne(
+Multiplier #(WIDTH) multOne(
 	.clk(clk),
 	.rst(rst),
     .start(start),
@@ -35,7 +35,7 @@ Multiplier multOne(
     .productDone(productDoneOne)
 );
 
-Multiplier multTwo(
+Multiplier #(WIDTH) multTwo(
     .clk(clk),
 	.rst(rst),
     .start(start),
