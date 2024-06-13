@@ -12,7 +12,7 @@ reset rst
 assert {timingLeakDone -> !timingLeak}
 
 #Commutative Property
-assert {multiplicandOne == multiplierTwo && multiplicandTwo == multiplierOne -> commutativeProp}
+assert {multiplicandOne == multiplierTwo && multiplicandTwo == multiplierOne && productDoneOne && productDoneTwo -> commutativeProp}
 
 #Associative Property
 assert {multiplierTwo == productOne && multiplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
