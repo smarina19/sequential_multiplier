@@ -16,7 +16,8 @@ assert {multiplicandOne == multiplierTwo && multiplicandTwo == multiplierOne && 
 
 #Associative Property
 assert {multiplierTwo == productOne && multiplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
-        && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree -> assocProp}
+        && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree && productTwo &&
+        productFour -> assocProp}
 
 
 prove -all
