@@ -81,8 +81,8 @@ Multiplier #(WIDTH) multFour(
 assign timingLeakDone = productDoneOne || productDoneTwo;
 assign timingLeak = ~(productDoneOne && productDoneTwo);
 
-assign commutativeProp = productOne && productTwo;
-assign assocProp = productTwo && productFour;
+assign commutativeProp = ~(productOne && productTwo);
+assign assocProp = ~(productTwo && productFour);
 
 
 endmodule
