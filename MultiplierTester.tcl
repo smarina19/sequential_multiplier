@@ -15,9 +15,9 @@ assert {timingLeakDone -> !timingLeak}
 assert {multiplicandOne == multiplierTwo && multiplicandTwo == multiplierOne && productDoneOne && productDoneTwo -> commutativeProp}
 
 #Associative Property
-assert {multiplierTwo == productOne && multiplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
+assert {productDoneOne && productDoneThree && multiplierTwo == productOne && multiplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
         && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree && productTwo &&
-        productFour -> assocProp}
+        productDoneFour -> assocProp}
 
 
 prove -all
