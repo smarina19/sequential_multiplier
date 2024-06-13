@@ -4,7 +4,7 @@
 
 `include "Multiplier.v"
 
-module MultiplierTester #(parameter WIDTH = 8)(
+module MultiplierTester #(parameter WIDTH = 16)(
 	input   clk,
 	input   rst,
     input   start,
