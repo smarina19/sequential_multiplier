@@ -12,10 +12,10 @@ assume {multiplicandOne == multiplicandTwo}
 assert {timingLeakDone -> !timingLeak}
 
 #Commutative Property
-assert {multiplicandOne == multiplierTwo && multiplicandTwo == mulitplierOne -> commutativeProp}
+assert {multiplicandOne == multiplierTwo && multiplicandTwo == multiplierOne -> commutativeProp}
 
 #Associative Property
-assert {multiplierTwo == productOne && mulitplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
+assert {multiplierTwo == productOne && multiplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
         && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree -> assocProp}
 
 

@@ -58,7 +58,6 @@ Multiplier #(WIDTH) multTwo(
     .productDone(productDoneTwo)
 );
 
-
 Multiplier #(WIDTH) multThree(
     .clk(clk),
 	.rst(rst),
@@ -78,7 +77,6 @@ Multiplier #(WIDTH) multFour(
 	.product(productFour),
     .productDone(productDoneFour)
 );
-
 
 assign timingLeakDone = productDoneOne || productDoneTwo;
 assign timingLeak = ~(productDoneOne && productDoneTwo);
