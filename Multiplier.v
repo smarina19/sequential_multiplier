@@ -5,7 +5,7 @@
 `include "MultiplierControl.v"
 `include "MultiplierDatapath.v"
 
-module Multiplier #(parameter WIDTH = 2048)(
+module Multiplier #(parameter WIDTH = 64)(
 	input   clk,
 	input   rst,
     input   start,
