@@ -11,4 +11,12 @@ assume {multiplicandOne == multiplicandTwo}
 # check if there is a timing attack possible that leaks secret
 assert {timingLeakDone -> !timingLeak}
 
+#Commutative Property
+assert {multiplicandOne == multiplierTwo && multiplicandTwo == mulitplierOne -> commutativeProp}
+
+#Associative Property
+assert {multiplierTwo == productOne && mulitplicandTwo == multiplierThree && multiplierThree == multiplicandOne 
+        && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree -> assocProp}
+
+
 prove -all
