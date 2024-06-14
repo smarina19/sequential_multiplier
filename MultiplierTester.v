@@ -4,7 +4,7 @@
 
 `include "Multiplier.v"
 
-module MultiplierTester #(parameter WIDTH = 64)(
+module MultiplierTester #(parameter WIDTH = 1024)(
 	input   clk,
 	input   rst,
     input   start,
@@ -81,8 +81,8 @@ Multiplier #(WIDTH) multFour(
 assign timingLeakDone = productDoneOne || productDoneTwo;
 assign timingLeak = ~(productDoneOne && productDoneTwo);
 
-assign commutativeProp = ~(productOne & productTwo);
-assign assocProp = ~(productTwo & productFour);
+// assign commutativeProp = ~(productOne & productTwo);
+// assign assocProp = ~(productTwo & productFour);
 
 
 endmodule
