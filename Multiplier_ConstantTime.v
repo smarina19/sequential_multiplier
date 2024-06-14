@@ -2,7 +2,7 @@
 // Multiplier Module (runs in constant time for all inputs)
 //==============================================================================
 
-`include "MultiplierControl.v"
+`include "MultiplierControl_ConstantTime.v"
 `include "MultiplierDatapath.v"
 
 module Multiplier_ConstantTime #(parameter WIDTH = 4)(
