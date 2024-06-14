@@ -16,4 +16,6 @@ assert {multiplicandOne == multiplicandTwo && timingLeakDone -> !timingLeak}
 #     && multiplicandThree == multiplierThree && multiplierFour == multiplierOne && multiplicandFour == productThree && productTwo &&
 #        productDoneFour -> assocProp}
 
+# Set the time limit to 1 hour (3600 seconds)
+set_option -timeout 3600
 prove -all
