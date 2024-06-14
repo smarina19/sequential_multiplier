@@ -1,5 +1,5 @@
 //==============================================================================
-// Multiplier Module
+// Multiplier Module with Taint Tracking
 //==============================================================================
 
 `include "MultiplierControl_TaintTrack.v"
