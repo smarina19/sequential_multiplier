@@ -9,5 +9,5 @@ reset rst
 check_spv -create -from multiplier -to {productDone}
 
 # Set the time limit to 1 hour (3600 seconds)
-set_option -timeout 3600
+set_prove_time_limit -timeout 3600
 prove -all
