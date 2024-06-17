@@ -1,6 +1,6 @@
-analyze -sv Multiplier_TaintTrack.v
+analyze -sv Multiplier_TaintTrack1Bit.v
 
-elaborate -top Multiplier_TaintTrack
+elaborate -top Multiplier_TaintTrack1Bit
 
 clock clk
 reset rst -non_resettable_regs 0
