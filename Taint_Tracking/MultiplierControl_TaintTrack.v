@@ -90,7 +90,7 @@ module MultiplierControl_TaintTrack #(parameter WIDTH = 4)(
 			if (start) begin
 				next_state = INIT;
 			end
-            next_state_t = next_state_t || start_t;
+            next_state_t = next_state_t || {STATE_WIDTH{start_t}};
 		end
 		else if (state == INIT) begin
 			next_state = 2;
@@ -105,7 +105,7 @@ module MultiplierControl_TaintTrack #(parameter WIDTH = 4)(
             else begin
                 next_state = next_state + 2;
             end
-            next_state_t = next_state_t || multiplierReg_t[(state >> 1) - 1];
+            next_state_t = next_state_t || {STATE_WIDTH{multiplierReg_t[(state >> 1) - 1]}};
         end
         else begin
             next_state = next_state + 1;
