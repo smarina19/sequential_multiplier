@@ -22,32 +22,47 @@ module Multiplier_TaintTrack #(parameter WIDTH = 4)(
 );
 	// Declare local connections here
 	wire rsload;
+    wire rsload_t;
 	wire rsclear;
+    wire rsclear_t;
 	wire rsshr;
+    wire rsshr_t;
 	wire mrld;
+    wire mrld_t;
 	wire mdld;
-    wire mr0;
-    wire mr1;
-    wire mr2;
-    wire mr3;
+    wire mdld_t;
     wire [WIDTH - 1:0] multiplierReg;
+    wire [WIDTH - 1:0] multiplierReg_t;
     wire [WIDTH * 2:0] runningSumReg;
+    wire [WIDTH * 2:0] runningSumReg_t;
     wire [WIDTH * 2:0] multiplicandReg;
+    wire [WIDTH * 2:0] multiplicandReg_t;
 
 	// Datapath -- check port connections/rename
 	MultiplierDatapath_TaintTrack #(WIDTH) dpath(
 		.clk    (clk),
         .multiplier (multiplier),
+        .multiplier_t (multiplier_t),
         .multiplicand (multiplicand),
+        .multiplicand_t (multiplicand_t),
         .rsload (rsload),
+        .rsload_t (rsload_t),
         .rsclear (rsclear),
+        .rsclear_t (rsclear_t),
         .rsshr (rsshr),
+        .rsshr_t (rsshr_t),
         .mrld (mrld),
+        .mrld_t (mrld_t),
         .mdld (mdld),
+        .mdld_t (mdld_t),
         .product (product),
-        .multiplierReg(multiplierReg),
-        .runningSumReg(runningSumReg),
-        .multiplicandReg(multiplicandReg)
+        .product_t (product_t),
+        .multiplierReg (multiplierReg),
+        .multiplierReg_t (multiplierReg_t),
+        .runningSumReg (runningSumReg),
+        .runningSumReg_t (runningSumReg_t),
+        .multiplicandReg (multiplicandReg),
+        .multiplicandReg_t (multiplicandReg_t)
 	);
 
 	// Control
@@ -55,13 +70,21 @@ module Multiplier_TaintTrack #(parameter WIDTH = 4)(
 		.clk  (clk),
 		.rst  (rst),
         .start (start),
+        .start_t (start_t),
         .rsload (rsload),
+        .rsload_t (rsload_t),
         .rsclear (rsclear),
+        .rsclear_t (rsclear_t),
         .rsshr (rsshr),
+        .rsshr_t (rsshr_t),
         .mrld (mrld),
+        .mrld_t (mrld_t),
         .mdld (mdld),
-        .multiplierReg(multiplierReg),
-        .productDone (productDone)
+        .mdld_t (mdld_t),
+        .multiplierReg (multiplierReg),
+        .multiplierReg_t (multiplierReg_t),
+        .productDone (productDone),
+        .productDone_t (productDone_t)
 	);
 
 endmodule
