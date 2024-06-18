@@ -167,8 +167,8 @@ module MultiplierTest;
         `ASSERT_EQ(product, 6900, "Product is incorrect");
 
         // 42 * 78
-        `SET(multiplier, 92)
-        `SET(multiplicand, 75)
+        `SET(multiplier, 42)
+        `SET(multiplicand, 78)
 
 		`SET(rst, 1);
 		`CLOCK;
