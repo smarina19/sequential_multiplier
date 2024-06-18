@@ -63,7 +63,6 @@ always @( posedge clk) begin
     // how do we know what to shift in here for sign?
     if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
-        runningSumReg_t <= runningSumReg_t >>> 1;
     end
 
     // taint logic depends on control bits
