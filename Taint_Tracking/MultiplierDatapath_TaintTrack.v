@@ -67,9 +67,9 @@ always @( posedge clk) begin
     end
 
     // taint logic depends on control bits
-    multiplicandReg_t <= multiplicandReg_t || {WIDTH{mdld_t}};
-    multiplierReg_t <= multiplierReg_t || {WIDTH{mrld_t}};
-    runningSumReg_t <= runningSumReg_t || {WIDTH{rsclear_t}} || {WIDTH{rsload_t}} || {WIDTH{rsshr_t}};
+    multiplicandReg_t <= multiplicandReg_t | {WIDTH{mdld_t}};
+    multiplierReg_t <= multiplierReg_t | {WIDTH{mrld_t}};
+    runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
 end 
     assign product = runningSumReg;
     assign product_t = runningSumReg_t;
