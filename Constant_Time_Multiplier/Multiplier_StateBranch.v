@@ -5,7 +5,7 @@
 `include "MultiplierControl_ConstantTime.v"
 `include "../MultiplierDatapath.v"
 
-module Multiplier_StateBranch #(parameter WIDTH = 4)(
+module Multiplier_StateBranch #(parameter WIDTH = 10000)(
 	input   clk,
 	input   rst,
     input   start,
