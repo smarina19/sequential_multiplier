@@ -68,7 +68,7 @@ always @( posedge clk) begin
 
     if(rsclear && !rsclear_t) begin
         runningSumReg <= 0;
-        runningSumReg_t <= 0:
+        runningSumReg_t <= 0;
     end
 
 
