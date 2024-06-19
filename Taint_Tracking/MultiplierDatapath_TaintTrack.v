@@ -80,7 +80,7 @@ always @( posedge clk) begin
 
     if(rsload && !rsload_t) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t | runningSumReg_t
+        runningSumReg_t <= multiplicandReg_t | runningSumReg_t;
     end
 
     // how do we know what to shift in here for sign?
@@ -90,7 +90,7 @@ always @( posedge clk) begin
     end
 
     if(rsshr && !rsshr_t) begin
-        runningSumReg_t <= runningSumReg_t
+        runningSumReg_t <= runningSumReg_t;
     end
 
     // taint logic depends on control bits
