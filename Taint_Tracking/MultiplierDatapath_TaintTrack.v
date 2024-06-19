@@ -42,34 +42,61 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
 always @( posedge clk) begin
     
     // init registers
-    if (mdld) begin
+    if (mdld && mdld_t) begin
         multiplicandReg <= multiplicand << WIDTH;
-        multiplicandReg_t <= multiplicand_t << WIDTH;
+        // do we have to perform shifts or addtion for taint registers if we only care if their bits carry any 1s?
+        multiplicandReg_t <= multiplicand_t | {WIDTH{mdld_t}};
     end
-    if (mrld) begin
+    if (!mdld_t && mdld) begin
+        multiplicandReg <= multiplicand << WIDTH; 
+        multiplicandReg_t <= multiplicand_t;
+    end
+    if (mrld && mrld_t) begin
+        multiplierReg <= multiplier;
+        multiplierReg_t <= multiplier_t | {WIDTH{mrld_t}};
+    end
+
+    if(mrld && !mrld_t) begin
         multiplierReg <= multiplier;
         multiplierReg_t <= multiplier_t;
     end
-    if (rsclear) begin
+
+    if (rsclear && rsclear_t) begin
         runningSumReg <= 0;
-        runningSumReg_t <= 0;
+        runningSumReg_t <= {WIDTH{rsclear_t}};
     end
 
-    // load running sum
-    if (rsload) begin
-        runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t + runningSumReg_t;
+    if(rsclear && !rsclear_t) begin
+        runningSumReg <= 0;
+        runningSumReg_t <= 0:
     end
+
+
+    // load running sum
+    if (rsload && rsload_t) begin
+        runningSumReg <= multiplicandReg + runningSumReg; 
+        runningSumReg_t <= multiplicandReg_t | runningSumReg_t | {WIDTH{rsload_t}};
+    end
+
+    if(rsload && !rsload_t) begin
+        runningSumReg <= multiplicandReg + runningSumReg; 
+        runningSumReg_t <= multiplicandReg_t | runningSumReg_t
+    end
+
     // how do we know what to shift in here for sign?
-    if (rsshr) begin
+    if (rsshr && rsshr_t) begin
         runningSumReg <= runningSumReg >>> 1; 
-        runningSumReg_t <= runningSumReg_t >>> 1;
+        runningSumReg_t <= runningSumReg_t | {WIDTH{rsshr_t}};
+    end
+
+    if(rsshr && !rsshr_t) begin
+        runningSumReg_t <= runningSumReg_t
     end
 
     // taint logic depends on control bits
-    multiplicandReg_t <= multiplicandReg_t | {WIDTH{mdld_t}};
-    multiplierReg_t <= multiplierReg_t | {WIDTH{mrld_t}};
-    runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
+    // multiplicandReg_t <= multiplicandReg_t | {WIDTH{mdld_t}};
+    // multiplierReg_t <= multiplierReg_t | {WIDTH{mrld_t}};
+    // runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
 end 
     assign product = runningSumReg;
     assign product_t = runningSumReg_t;
