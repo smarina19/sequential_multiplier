@@ -89,6 +89,7 @@ always @( posedge clk) begin
 
     else if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
+        runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
     end
 
     else begin 
