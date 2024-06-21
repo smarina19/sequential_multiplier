@@ -42,63 +42,54 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
 always @( posedge clk) begin
     
     // init registers
-    if (mdld && mdld_t) begin
+    if (mdld) begin
         multiplicandReg <= multiplicand << WIDTH;
-        // do we have to perform shifts or addtion for taint registers if we only care if their bits carry any 1s?
-        multiplicandReg_t <= multiplicand_t | {WIDTH{mdld_t}};
-    end
-    if (!mdld_t && mdld) begin
-        multiplicandReg <= multiplicand << WIDTH; 
-        multiplicandReg_t <= multiplicand_t;
-    end
-    if (mrld && mrld_t) begin
-        multiplierReg <= multiplier;
-        multiplierReg_t <= multiplier_t | {WIDTH{mrld_t}};
+        multiplicandReg_t <= multiplicand_t << WIDTH;
     end
 
-    if(mrld && !mrld_t) begin
+    if (mrld) begin
         multiplierReg <= multiplier;
         multiplierReg_t <= multiplier_t;
     end
 
-    if (rsclear && rsclear_t) begin
-        runningSumReg <= 0;
-        runningSumReg_t <= {WIDTH{rsclear_t}};
-    end
-
-    if(rsclear && !rsclear_t) begin
+    if (rsclear) begin
         runningSumReg <= 0;
         runningSumReg_t <= 0;
     end
 
-
+    integer i;
+    wire carry;
     // load running sum
-    if (rsload && rsload_t) begin
+    if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t | runningSumReg_t | {WIDTH{rsload_t}};
-    end
-
-    if(rsload && !rsload_t) begin
-        runningSumReg <= multiplicandReg + runningSumReg; 
+        // addition logic
         runningSumReg_t <= multiplicandReg_t | runningSumReg_t;
+        carry = 0;
+        for (i = 0; i < WIDTH - 1; i = i + 1) begin
+            if (((multiplicandReg[i] & runningSumReg[i]) | 
+                 (multiplicandReg[i] & carry) |
+                  runningSumReg[i] & carry)) 
+            begin
+                  carry = 1;
+                  if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
+                    runningSumReg_t[i + 1] = 1; // Propagate taint to the next bit if carry occurs in addition
+                  end
+            end
+            else begin
+                carry = 0;
+            end
+        end
     end
 
-    // how do we know what to shift in here for sign?
-    if (rsshr && rsshr_t) begin
+    if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
-        runningSumReg_t <= runningSumReg_t | {WIDTH{rsshr_t}};
-    end
-
-    if(rsshr && !rsshr_t) begin
-        runningSumReg_t <= runningSumReg_t;
     end
 
     // taint logic depends on control bits
-    // multiplicandReg_t <= multiplicandReg_t | {WIDTH{mdld_t}};
-    // multiplierReg_t <= multiplierReg_t | {WIDTH{mrld_t}};
-    // runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
+    multiplicandReg_t <= multiplicandReg_t | {WIDTH{mdld_t}};
+    multiplierReg_t <= multiplierReg_t | {WIDTH{mrld_t}};
+    runningSumReg_t <= runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
 end 
     assign product = runningSumReg;
     assign product_t = runningSumReg_t;
-
 endmodule
