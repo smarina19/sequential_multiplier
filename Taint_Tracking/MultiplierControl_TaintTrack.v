@@ -46,11 +46,17 @@ module MultiplierControl_TaintTrack #(parameter WIDTH = 4)(
 	always @( * ) begin
 		// Set defaults
         rsload = 0;
+        rsload_t = 0;
         rsclear = 0;
+        rsclear_t = 0;
         rsshr = 0;
+        rsshr_t = 0;
         mrld = 0;
+        mrld_t = 0;
         mdld = 0;
+        mdld_t = 0;
         productDone = 0;
+        
         if (state == START) begin
         end
         else if (state == INIT) begin
@@ -58,26 +64,26 @@ module MultiplierControl_TaintTrack #(parameter WIDTH = 4)(
             mrld = 1;
             rsclear = 1;
 
-            mdld_t = mdld_t | state_t;
-            mrld_t = mrld_t | state_t;
-            rsclear_t = rsclear_t | state_t;
+            mdld_t = |state_t;
+            mrld_t = |state_t;
+            rsclear_t = |state_t;
         end
         else if (state == FINAL) begin
             rsshr = 1;
             productDone = 1;
 
-            rsshr_t = rsshr_t | state_t;
-            productDone_t = productDone_t | state_t;
+            rsshr_t = |state_t;
+            productDone_t = |state_t;
         end
         else if (state[0] == 1) begin
             rsload = 1;
 
-            rsload_t = rsload_t | state_t;
+            rsload_t = |state_t;
         end
         else begin
             rsshr = 1;
 
-            rsshr_t = rsshr_t | state_t;
+            rsshr_t = |state_t;
         end
 	end
 

@@ -58,26 +58,26 @@ module MultiplierControl_TaintTrack1Bit #(parameter WIDTH = 1024)(
             mrld = 1;
             rsclear = 1;
 
-            mdld_t = mdld_t || state_t;
-            mrld_t = mrld_t || state_t;
-            rsclear_t = rsclear_t || state_t;
+            mdld_t = state_t;
+            mrld_t = state_t;
+            rsclear_t = state_t;
         end
         else if (state == FINAL) begin
             rsshr = 1;
             productDone = 1;
 
-            rsshr_t = rsshr_t || state_t;
-            productDone_t = productDone_t || state_t;
+            rsshr_t = state_t;
+            productDone_t = state_t;
         end
         else if (state[0] == 1) begin
             rsload = 1;
 
-            rsload_t = rsload_t || state_t;
+            rsload_t = state_t;
         end
         else begin
             rsshr = 1;
 
-            rsshr_t = rsshr_t || state_t;
+            rsshr_t = state_t;
         end
 	end
 

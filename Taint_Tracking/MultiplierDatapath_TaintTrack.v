@@ -38,6 +38,8 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
     output reg [WIDTH*2:0] multiplicandReg_t
 );
 
+integer i;
+integer carry;
 // Sequential Logic
 always @( posedge clk) begin
     
@@ -46,10 +48,12 @@ always @( posedge clk) begin
         multiplicandReg <= multiplicand << WIDTH;
         multiplicandReg_t <= multiplicand_t << WIDTH;
     end
+
     if (mrld) begin
         multiplierReg <= multiplier;
         multiplierReg_t <= multiplier_t;
     end
+
     if (rsclear) begin
         runningSumReg <= 0;
         runningSumReg_t <= 0;
@@ -58,12 +62,27 @@ always @( posedge clk) begin
     // load running sum
     if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t + runningSumReg_t;
+        // addition logic - I don't know how to implement w/o using block assignment :(
+        runningSumReg_t <= multiplicandReg_t | runningSumReg_t;
+        carry = 0;
+        for (i = 0; i < WIDTH - 1; i = i + 1) begin
+            if (((multiplicandReg[i] & runningSumReg[i]) | 
+                 (multiplicandReg[i] & carry) |
+                  (runningSumReg[i] & carry))) 
+            begin
+                  carry = 1;
+                  if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
+                    runningSumReg_t[i + 1] <= 1; // Propagate taint to the next bit if carry occurs in addition, should it be one or runningSumReg_t[i]
+                  end
+            end
+            else begin
+                carry = 0;
+            end
+        end
     end
-    // how do we know what to shift in here for sign?
+
     if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
-        runningSumReg_t <= runningSumReg_t >>> 1;
     end
 
     // taint logic depends on control bits
@@ -73,5 +92,4 @@ always @( posedge clk) begin
 end 
     assign product = runningSumReg;
     assign product_t = runningSumReg_t;
-
 endmodule
