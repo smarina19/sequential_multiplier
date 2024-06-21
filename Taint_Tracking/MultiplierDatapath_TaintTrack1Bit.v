@@ -44,32 +44,41 @@ always @( posedge clk) begin
     // init registers
     if (mdld) begin
         multiplicandReg <= multiplicand << WIDTH;
-        multiplicandReg_t <= multiplicand_t;
+        multiplicandReg_t <= multiplicand_t || mdld_t;
     end
+    else begin
+        multiplicandReg_t <= multiplicandReg_t || mdld_t;
+    end
+
     if (mrld) begin
         multiplierReg <= multiplier;
-        multiplierReg_t <= multiplier_t;
+        multiplierReg_t <= multiplier_t || mrld_t;
     end
+    else begin
+        multiplierReg_t <= multiplierReg_t || mrld_t;
+    end
+
     if (rsclear) begin
         runningSumReg <= 0;
-        runningSumReg_t <= 0;
+        runningSumReg_t <= 0 || rsclear;
     end
 
     // load running sum
-    if (rsload) begin
+    else if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t || runningSumReg_t;
+        runningSumReg_t <= multiplicandReg_t || runningSumReg_t || rsload || rsshr;
     end
 
-    if (rsshr) begin
+    else if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
+        runningSumReg <= runningSumReg_t || rsclear_t || rsload_t || rsshr_t;
     end
 
-    // taint logic depends on control bits
-    multiplicandReg_t <= multiplicandReg_t || mdld_t;
-    multiplierReg_t <= multiplierReg_t || mrld_t;
-    runningSumReg_t <= runningSumReg_t || rsclear_t || rsload_t || rsshr_t;
-end 
+    else begin
+        runningSumReg_t <= runningSumReg_t || rsclear_t || rsload_t || rsshr_t;
+    end 
+end
+
     assign product = runningSumReg;
     assign product_t = runningSumReg_t;
 
