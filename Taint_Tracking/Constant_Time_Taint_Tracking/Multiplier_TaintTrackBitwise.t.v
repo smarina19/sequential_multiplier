@@ -30,6 +30,9 @@ module MultiplierTest;
 	reg [NUM_BITS - 1:0] multiplier = 7'd0;
 	reg [NUM_BITS - 1:0] multiplicand = 7'd0;
     wire [2 * NUM_BITS - 1:0] product;
+    reg start_t = 0;
+    reg multiplier_t = 0;
+    reg multiplicand_t = 0;
 
 	// Error Counts
 	reg [7:0] errors = 0;
@@ -47,7 +50,10 @@ module MultiplierTest;
         .start  (start),
         .multiplier (multiplier),
         .multiplicand (multiplicand),
-        .product (product)
+        .product (product),
+        .start_t (start_t),
+        .multiplier_t (multiplier_t),
+        .multiplicand_t (multiplicand_t)
 	);
 
     integer i;

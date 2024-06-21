@@ -9,6 +9,7 @@ module Multiplier_TaintTrackBitwise #(parameter WIDTH = 4)(
 	input   clk,
 	input   rst,
     input   start,
+    input   start_t,
     input [WIDTH - 1:0] multiplier,
     input multiplier_t,
     input [WIDTH - 1:0] multiplicand,

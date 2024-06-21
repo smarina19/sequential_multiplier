@@ -2,11 +2,12 @@
 // Control Module for Sequential Multiplier
 //==============================================================================
 
-module MultiplierControl_ConstantTime #(parameter WIDTH = 4)(
+module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 	// External Inputs
 	input   clk,           // Clock
     input   rst,           // reset
 	input   start,
+    input   start_t,
 
     // External Output
     output reg productDone,
