@@ -38,6 +38,8 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
     output reg [WIDTH*2:0] multiplicandReg_t
 );
 
+integer i;
+wire carry;
 // Sequential Logic
 always @( posedge clk) begin
     
@@ -57,8 +59,6 @@ always @( posedge clk) begin
         runningSumReg_t <= 0;
     end
 
-    integer i;
-    wire carry;
     // load running sum
     if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
