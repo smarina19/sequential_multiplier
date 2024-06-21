@@ -2,7 +2,7 @@
 // Control Module for Sequential Multiplier with Taint Tracking
 //==============================================================================
 
-module MultiplierControl_TaintTrack1Bit #(parameter WIDTH = 2048)(
+module MultiplierControl_TaintTrack1Bit #(parameter WIDTH = 1024)(
 	// External Inputs
 	input   clk,           // Clock
     input   rst,           // reset
