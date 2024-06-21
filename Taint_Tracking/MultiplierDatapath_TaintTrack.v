@@ -38,8 +38,8 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
     output reg [WIDTH*2:0] multiplicandReg_t
 );
 
-reg [WIDTH - 1:0] carryIn;
-reg [WIDTH - 1:0] carryIn_t;
+reg [WIDTH*2:0] carryIn;
+reg [WIDTH*2:0] carryIn_t;
 integer i;
 
 // Sequential Logic
@@ -74,7 +74,7 @@ always @( posedge clk) begin
         // carry taint logic
         carryIn[0] = 0;
         carryIn_t[0] = 0;
-        for (i = 0; i < WIDTH - 1; i = i + 1) begin
+        for (i = 0; i < 2 * WIDTH - 1; i = i + 1) begin
 
             // check if there is a carry-out from i
             if (((multiplicandReg[i] & runningSumReg[i]) | 
@@ -93,7 +93,7 @@ always @( posedge clk) begin
             end
             else begin
                 carryIn[i + 1] = 0;
-                carryIn_t[i + 1] = 0
+                carryIn_t[i + 1] = 0;
             end
         end
         runningSumReg_t <= carryIn_t | runningSumReg_t | multiplicandReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
