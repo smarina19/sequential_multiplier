@@ -66,12 +66,12 @@ always @( posedge clk) begin
     // load running sum
     else if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        runningSumReg_t <= multiplicandReg_t || runningSumReg_t || rsload || rsshr;
+        runningSumReg_t <= multiplicandReg_t || runningSumReg_t || rsload_t || rsshr_t;
     end
 
     else if (rsshr) begin
         runningSumReg <= runningSumReg >>> 1; 
-        runningSumReg <= runningSumReg_t || rsclear_t || rsload_t || rsshr_t;
+        runningSumReg_t <= runningSumReg_t || rsclear_t || rsload_t || rsshr_t;
     end
 
     else begin
