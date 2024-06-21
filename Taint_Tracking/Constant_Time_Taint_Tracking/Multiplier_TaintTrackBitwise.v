@@ -1,26 +1,26 @@
 //==============================================================================
-// Multiplier Module with Taint Tracking
+// Multiplier Module (runs in constant time for all inputs)
 //==============================================================================
 
-`include "MultiplierControl_TaintTrack.v"
-`include "MultiplierDatapath_TaintTrack.v"
+`include "MultiplierControl_TaintTrackBitwise.v"
+`include "../MultiplierDatapath_TaintTrack1Bit.v"
 
-module Multiplier_TaintTrack #(parameter WIDTH = 1024)(
+module Multiplier_TaintTrackBitwise #(parameter WIDTH = 4)(
 	input   clk,
 	input   rst,
     input   start,
     input   start_t,
     input [WIDTH - 1:0] multiplier,
-    input [WIDTH - 1:0] multiplier_t,
+    input multiplier_t,
     input [WIDTH - 1:0] multiplicand,
-    input [WIDTH - 1:0] multiplicand_t,
+    input multiplicand_t,
 
 	output [2*WIDTH - 1:0] product,
-    output [2*WIDTH - 1:0] product_t,
+    output product_t,
     output productDone,
     output productDone_t
 );
-	// Declare local connections here
+
 	wire rsload;
     wire rsload_t;
 	wire rsclear;
@@ -32,14 +32,13 @@ module Multiplier_TaintTrack #(parameter WIDTH = 1024)(
 	wire mdld;
     wire mdld_t;
     wire [WIDTH - 1:0] multiplierReg;
-    wire [WIDTH - 1:0] multiplierReg_t;
+    wire multiplierReg_t;
     wire [WIDTH * 2:0] runningSumReg;
-    wire [WIDTH * 2:0] runningSumReg_t;
+    wire runningSumReg_t;
     wire [WIDTH * 2:0] multiplicandReg;
-    wire [WIDTH * 2:0] multiplicandReg_t;
+    wire  multiplicandReg_t;
 
-	// Datapath -- check port connections/rename
-	MultiplierDatapath_TaintTrack #(WIDTH) dpath(
+	MultiplierDatapath_TaintTrack1Bit #(WIDTH) dpath(
 		.clk    (clk),
         .multiplier (multiplier),
         .multiplier_t (multiplier_t),
@@ -66,7 +65,7 @@ module Multiplier_TaintTrack #(parameter WIDTH = 1024)(
 	);
 
 	// Control
-	MultiplierControl_TaintTrack #(WIDTH) ctrl(
+	MultiplierControl_TaintTrackBitwise #(WIDTH) ctrl(
 		.clk  (clk),
 		.rst  (rst),
         .start (start),
