@@ -2,7 +2,7 @@
 // Datapath Module for Sequential Multiplier
 //==============================================================================
 
-module MultiplierDatapath_TaintTrack1Bit #(parameter WIDTH = 1024)(
+module MultiplierDatapath_TaintTrack1Bit #(parameter WIDTH = 4)(
 
     // External Inputs
     input   clk,       // Clock 
