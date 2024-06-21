@@ -72,7 +72,7 @@ always @( posedge clk) begin
             begin
                   carry = 1;
                   if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
-                    runningSumReg_t[i + 1] = 1; // Propagate taint to the next bit if carry occurs in addition
+                    runningSumReg_t[i + 1] <= 1; // Propagate taint to the next bit if carry occurs in addition
                   end
             end
             else begin
