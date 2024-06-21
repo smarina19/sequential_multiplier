@@ -68,11 +68,11 @@ always @( posedge clk) begin
         for (i = 0; i < WIDTH - 1; i = i + 1) begin
             if (((multiplicandReg[i] & runningSumReg[i]) | 
                  (multiplicandReg[i] & carry) |
-                  runningSumReg[i] & carry)) 
+                  (runningSumReg[i] & carry))) 
             begin
                   carry = 1;
                   if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
-                    runningSumReg_t[i + 1] <= 1; // Propagate taint to the next bit if carry occurs in addition
+                    runningSumReg_t[i + 1] <= 1; // Propagate taint to the next bit if carry occurs in addition, should it be one or runningSumReg_t[i]
                   end
             end
             else begin
