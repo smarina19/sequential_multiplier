@@ -39,7 +39,7 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
 );
 
 integer i;
-wire carry;
+integer carry;
 // Sequential Logic
 always @( posedge clk) begin
     
@@ -62,7 +62,7 @@ always @( posedge clk) begin
     // load running sum
     if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        // addition logic
+        // addition logic - I don't know how to implement w/o using block assignment :(
         runningSumReg_t <= multiplicandReg_t | runningSumReg_t;
         carry = 0;
         for (i = 0; i < WIDTH - 1; i = i + 1) begin
