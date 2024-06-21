@@ -38,8 +38,10 @@ module MultiplierDatapath_TaintTrack #(parameter WIDTH = 4)(
     output reg [WIDTH*2:0] multiplicandReg_t
 );
 
+reg [WIDTH - 1:0] carryIn;
+reg [WIDTH - 1:0] carryIn_t;
 integer i;
-integer carry;
+
 // Sequential Logic
 always @( posedge clk) begin
     
@@ -68,23 +70,33 @@ always @( posedge clk) begin
     // load running sum
     else if (rsload) begin
         runningSumReg <= multiplicandReg + runningSumReg; 
-        // addition logic - I don't know how to implement w/o using this weird loop logic
-        runningSumReg_t <= multiplicandReg_t | runningSumReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
-        carry = 0;
+
+        // carry taint logic
+        carryIn[0] = 0;
+        carryIn_t[0] = 0;
         for (i = 0; i < WIDTH - 1; i = i + 1) begin
+
+            // check if there is a carry-out from i
             if (((multiplicandReg[i] & runningSumReg[i]) | 
-                 (multiplicandReg[i] & carry) |
-                  (runningSumReg[i] & carry))) 
+                 (multiplicandReg[i] & carryIn[i]) |
+                  (runningSumReg[i] & carryIn[i]))) 
             begin
-                  carry = 1;
+                  carryIn[i + 1] = 1;
+
+                  // check if the carry-out from i should be tainted
                   if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
-                    runningSumReg_t[i + 1] <= 1; // Propagate taint to the next bit if carry occurs in addition, should it be one or runningSumReg_t[i]
+                    carryIn_t[i + 1] = 1;
+                  end
+                  else begin
+                    carryIn_t[i + 1] = 0;
                   end
             end
             else begin
-                carry = 0;
+                carryIn[i + 1] = 0;
+                carryIn_t[i + 1] = 0
             end
         end
+        runningSumReg_t <= carryIn_t | runningSumReg_t | multiplicandReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
     end
 
     else if (rsshr) begin
