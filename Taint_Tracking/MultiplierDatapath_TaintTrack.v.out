@@ -1,0 +1,227 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_0000020d3cc4bac0 .scope module, "MultiplierDatapath_TaintTrack" "MultiplierDatapath_TaintTrack" 2 5;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 4 "multiplier";
+    .port_info 2 /INPUT 4 "multiplier_t";
+    .port_info 3 /INPUT 4 "multiplicand";
+    .port_info 4 /INPUT 4 "multiplicand_t";
+    .port_info 5 /OUTPUT 8 "product";
+    .port_info 6 /OUTPUT 8 "product_t";
+    .port_info 7 /INPUT 1 "rsload";
+    .port_info 8 /INPUT 1 "rsload_t";
+    .port_info 9 /INPUT 1 "rsclear";
+    .port_info 10 /INPUT 1 "rsclear_t";
+    .port_info 11 /INPUT 1 "rsshr";
+    .port_info 12 /INPUT 1 "rsshr_t";
+    .port_info 13 /INPUT 1 "mrld";
+    .port_info 14 /INPUT 1 "mrld_t";
+    .port_info 15 /INPUT 1 "mdld";
+    .port_info 16 /INPUT 1 "mdld_t";
+    .port_info 17 /OUTPUT 4 "multiplierReg";
+    .port_info 18 /OUTPUT 4 "multiplierReg_t";
+    .port_info 19 /OUTPUT 9 "runningSumReg";
+    .port_info 20 /OUTPUT 9 "runningSumReg_t";
+    .port_info 21 /OUTPUT 9 "multiplicandReg";
+    .port_info 22 /OUTPUT 9 "multiplicandReg_t";
+P_0000020d3ccf6890 .param/l "WIDTH" 0 2 5, +C4<00000000000000000000000000000100>;
+v0000020d3ccd2ca0_0 .var/i "carry", 31 0;
+o0000020d3cd10fe8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3ccd28d0_0 .net "clk", 0 0, o0000020d3cd10fe8;  0 drivers
+v0000020d3cd59820_0 .var/i "i", 31 0;
+o0000020d3cd11048 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd598c0_0 .net "mdld", 0 0, o0000020d3cd11048;  0 drivers
+o0000020d3cd11078 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd59960_0 .net "mdld_t", 0 0, o0000020d3cd11078;  0 drivers
+o0000020d3cd110a8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd59a00_0 .net "mrld", 0 0, o0000020d3cd110a8;  0 drivers
+o0000020d3cd110d8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd59aa0_0 .net "mrld_t", 0 0, o0000020d3cd110d8;  0 drivers
+o0000020d3cd11108 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0000020d3cd59b40_0 .net "multiplicand", 3 0, o0000020d3cd11108;  0 drivers
+v0000020d3cd59be0_0 .var "multiplicandReg", 8 0;
+v0000020d3cd59c80_0 .var "multiplicandReg_t", 8 0;
+o0000020d3cd11198 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0000020d3cd59d20_0 .net "multiplicand_t", 3 0, o0000020d3cd11198;  0 drivers
+o0000020d3cd111c8 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0000020d3cd59dc0_0 .net "multiplier", 3 0, o0000020d3cd111c8;  0 drivers
+v0000020d3cd59e60_0 .var "multiplierReg", 3 0;
+v0000020d3cd59f00_0 .var "multiplierReg_t", 3 0;
+o0000020d3cd11258 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0000020d3cd015b0_0 .net "multiplier_t", 3 0, o0000020d3cd11258;  0 drivers
+v0000020d3cd018d0_0 .net "product", 7 0, L_0000020d3cd01970;  1 drivers
+v0000020d3cd01d30_0 .net "product_t", 7 0, L_0000020d3cd01150;  1 drivers
+o0000020d3cd112e8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd016f0_0 .net "rsclear", 0 0, o0000020d3cd112e8;  0 drivers
+o0000020d3cd11318 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd01c90_0 .net "rsclear_t", 0 0, o0000020d3cd11318;  0 drivers
+o0000020d3cd11348 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd02050_0 .net "rsload", 0 0, o0000020d3cd11348;  0 drivers
+o0000020d3cd11378 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd01470_0 .net "rsload_t", 0 0, o0000020d3cd11378;  0 drivers
+o0000020d3cd113a8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd01650_0 .net "rsshr", 0 0, o0000020d3cd113a8;  0 drivers
+o0000020d3cd113d8 .functor BUFZ 1, C4<z>; HiZ drive
+v0000020d3cd011f0_0 .net "rsshr_t", 0 0, o0000020d3cd113d8;  0 drivers
+v0000020d3cd01290_0 .var "runningSumReg", 8 0;
+v0000020d3cd01b50_0 .var "runningSumReg_t", 8 0;
+E_0000020d3ccf6c10 .event posedge, v0000020d3ccd28d0_0;
+L_0000020d3cd01970 .part v0000020d3cd01290_0, 0, 8;
+L_0000020d3cd01150 .part v0000020d3cd01b50_0, 0, 8;
+    .scope S_0000020d3cc4bac0;
+T_0 ;
+    %wait E_0000020d3ccf6c10;
+    %load/vec4 v0000020d3cd598c0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.0, 8;
+    %load/vec4 v0000020d3cd59b40_0;
+    %pad/u 9;
+    %ix/load 4, 4, 0;
+    %flag_set/imm 4, 0;
+    %shiftl 4;
+    %assign/vec4 v0000020d3cd59be0_0, 0;
+    %load/vec4 v0000020d3cd59d20_0;
+    %pad/u 9;
+    %ix/load 4, 4, 0;
+    %flag_set/imm 4, 0;
+    %shiftl 4;
+    %assign/vec4 v0000020d3cd59c80_0, 0;
+T_0.0 ;
+    %load/vec4 v0000020d3cd59a00_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.2, 8;
+    %load/vec4 v0000020d3cd59dc0_0;
+    %assign/vec4 v0000020d3cd59e60_0, 0;
+    %load/vec4 v0000020d3cd015b0_0;
+    %assign/vec4 v0000020d3cd59f00_0, 0;
+T_0.2 ;
+    %load/vec4 v0000020d3cd016f0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.4, 8;
+    %pushi/vec4 0, 0, 9;
+    %assign/vec4 v0000020d3cd01290_0, 0;
+    %pushi/vec4 0, 0, 9;
+    %assign/vec4 v0000020d3cd01b50_0, 0;
+T_0.4 ;
+    %load/vec4 v0000020d3cd02050_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.6, 8;
+    %load/vec4 v0000020d3cd59be0_0;
+    %load/vec4 v0000020d3cd01290_0;
+    %add;
+    %assign/vec4 v0000020d3cd01290_0, 0;
+    %load/vec4 v0000020d3cd59c80_0;
+    %load/vec4 v0000020d3cd01b50_0;
+    %or;
+    %assign/vec4 v0000020d3cd01b50_0, 0;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000020d3ccd2ca0_0, 0, 32;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000020d3cd59820_0, 0, 32;
+T_0.8 ;
+    %load/vec4 v0000020d3cd59820_0;
+    %cmpi/s 3, 0, 32;
+    %jmp/0xz T_0.9, 5;
+    %load/vec4 v0000020d3cd59be0_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %pad/u 32;
+    %load/vec4 v0000020d3cd01290_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %pad/u 32;
+    %and;
+    %load/vec4 v0000020d3cd59be0_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %pad/u 32;
+    %load/vec4 v0000020d3ccd2ca0_0;
+    %and;
+    %or;
+    %load/vec4 v0000020d3cd01290_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %pad/u 32;
+    %load/vec4 v0000020d3ccd2ca0_0;
+    %and;
+    %or;
+    %cmpi/ne 0, 0, 32;
+    %jmp/0xz  T_0.10, 4;
+    %pushi/vec4 1, 0, 32;
+    %store/vec4 v0000020d3ccd2ca0_0, 0, 32;
+    %load/vec4 v0000020d3cd59c80_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %load/vec4 v0000020d3cd01b50_0;
+    %load/vec4 v0000020d3cd59820_0;
+    %part/s 1;
+    %or;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.12, 8;
+    %pushi/vec4 1, 0, 1;
+    %ix/load 5, 0, 0;
+    %load/vec4 v0000020d3cd59820_0;
+    %addi 1, 0, 32;
+    %ix/vec4/s 4;
+    %assign/vec4/off/d v0000020d3cd01b50_0, 4, 5;
+T_0.12 ;
+    %jmp T_0.11;
+T_0.10 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0000020d3ccd2ca0_0, 0, 32;
+T_0.11 ;
+    %load/vec4 v0000020d3cd59820_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0000020d3cd59820_0, 0, 32;
+    %jmp T_0.8;
+T_0.9 ;
+T_0.6 ;
+    %load/vec4 v0000020d3cd01650_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_0.14, 8;
+    %load/vec4 v0000020d3cd01290_0;
+    %ix/load 4, 1, 0;
+    %flag_set/imm 4, 0;
+    %shiftr 4;
+    %assign/vec4 v0000020d3cd01290_0, 0;
+T_0.14 ;
+    %load/vec4 v0000020d3cd59c80_0;
+    %load/vec4 v0000020d3cd59960_0;
+    %replicate 4;
+    %pad/u 9;
+    %or;
+    %assign/vec4 v0000020d3cd59c80_0, 0;
+    %load/vec4 v0000020d3cd59f00_0;
+    %load/vec4 v0000020d3cd59aa0_0;
+    %replicate 4;
+    %or;
+    %assign/vec4 v0000020d3cd59f00_0, 0;
+    %load/vec4 v0000020d3cd01b50_0;
+    %load/vec4 v0000020d3cd01c90_0;
+    %replicate 4;
+    %pad/u 9;
+    %or;
+    %load/vec4 v0000020d3cd01470_0;
+    %replicate 4;
+    %pad/u 9;
+    %or;
+    %load/vec4 v0000020d3cd011f0_0;
+    %replicate 4;
+    %pad/u 9;
+    %or;
+    %assign/vec4 v0000020d3cd01b50_0, 0;
+    %jmp T_0;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "MultiplierDatapath_TaintTrack.v";

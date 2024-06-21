@@ -1,0 +1,893 @@
+$date
+	Thu Jun 06 21:04:32 2024
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module MultiplierTest $end
+$var wire 9 ! product [8:0] $end
+$var reg 1 " clk $end
+$var reg 8 # errors [7:0] $end
+$var reg 4 $ multiplicand [3:0] $end
+$var reg 4 % multiplier [3:0] $end
+$var reg 1 & rst $end
+$var reg 1 ' start $end
+$var integer 32 ( i [31:0] $end
+$scope module multipliertester $end
+$var wire 1 " clk $end
+$var wire 4 ) multiplicand [3:0] $end
+$var wire 4 * multiplier [3:0] $end
+$var wire 1 & rst $end
+$var wire 1 ' start $end
+$var wire 9 + runningSumReg [8:0] $end
+$var wire 1 , rsshr $end
+$var wire 1 - rsload $end
+$var wire 1 . rsclear $end
+$var wire 1 / productDone $end
+$var wire 9 0 product [8:0] $end
+$var wire 4 1 multiplierReg [3:0] $end
+$var wire 9 2 multiplicandReg [8:0] $end
+$var wire 1 3 mrld $end
+$var wire 1 4 mr3 $end
+$var wire 1 5 mr2 $end
+$var wire 1 6 mr1 $end
+$var wire 1 7 mr0 $end
+$var wire 1 8 mdld $end
+$scope module ctrl $end
+$var wire 1 " clk $end
+$var wire 1 & rst $end
+$var wire 1 ' start $end
+$var wire 1 4 mr3 $end
+$var wire 1 5 mr2 $end
+$var wire 1 6 mr1 $end
+$var wire 1 7 mr0 $end
+$var parameter 4 9 BIT_ONE $end
+$var parameter 4 : BIT_ONE_TRUE $end
+$var parameter 4 ; BIT_THREE $end
+$var parameter 4 < BIT_THREE_TRUE $end
+$var parameter 4 = BIT_TWO $end
+$var parameter 4 > BIT_TWO_TRUE $end
+$var parameter 4 ? BIT_ZERO $end
+$var parameter 4 @ BIT_ZERO_TRUE $end
+$var parameter 4 A FINAL $end
+$var parameter 4 B INIT $end
+$var parameter 4 C START $end
+$var reg 1 8 mdld $end
+$var reg 1 3 mrld $end
+$var reg 4 D next_state [3:0] $end
+$var reg 1 / productDone $end
+$var reg 1 . rsclear $end
+$var reg 1 - rsload $end
+$var reg 1 , rsshr $end
+$var reg 4 E state [3:0] $end
+$upscope $end
+$scope module dpath $end
+$var wire 1 " clk $end
+$var wire 1 8 mdld $end
+$var wire 1 3 mrld $end
+$var wire 4 F multiplicand [3:0] $end
+$var wire 4 G multiplier [3:0] $end
+$var wire 9 H product [8:0] $end
+$var wire 1 . rsclear $end
+$var wire 1 - rsload $end
+$var wire 1 , rsshr $end
+$var wire 1 4 mr3 $end
+$var wire 1 5 mr2 $end
+$var wire 1 6 mr1 $end
+$var wire 1 7 mr0 $end
+$var reg 9 I multiplicandReg [8:0] $end
+$var reg 4 J multiplierReg [3:0] $end
+$var reg 9 K runningSumReg [8:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b0 C
+b1 B
+b1010 A
+b11 @
+b10 ?
+b111 >
+b110 =
+b1001 <
+b1000 ;
+b101 :
+b100 9
+$end
+#0
+$dumpvars
+bx K
+bx J
+bx I
+bx H
+b0 G
+b0 F
+bx E
+bx D
+x8
+x7
+x6
+x5
+x4
+x3
+bx 2
+bx 1
+bx 0
+x/
+x.
+x-
+x,
+bx +
+b0 *
+b0 )
+bx (
+0'
+0&
+b0 %
+b0 $
+b0 #
+0"
+bx !
+$end
+#10
+b11 %
+b11 *
+b11 G
+#30
+b110 $
+b110 )
+b110 F
+#50
+1&
+#70
+b0 D
+0/
+08
+03
+0,
+0.
+0-
+b0 E
+1"
+#80
+0"
+#100
+0&
+#120
+b1 D
+1'
+#140
+b10 D
+1.
+13
+18
+b1 E
+1"
+#150
+0"
+#170
+b10 D
+0'
+#180
+b0 (
+#190
+04
+05
+16
+17
+b11 D
+08
+03
+0.
+b0 !
+b0 0
+b0 H
+b0 +
+b0 K
+b11 1
+b11 J
+b1100000 2
+b1100000 I
+b10 E
+1"
+#200
+0"
+#210
+b1 (
+#220
+b100 D
+1-
+b11 E
+1"
+#230
+0"
+#240
+b10 (
+#250
+b101 D
+1,
+0-
+b1100000 !
+b1100000 0
+b1100000 H
+b1100000 +
+b1100000 K
+b100 E
+1"
+#260
+0"
+#270
+b11 (
+#280
+b110 D
+1-
+0,
+b101 E
+b110000 !
+b110000 0
+b110000 H
+b110000 +
+b110000 K
+1"
+#290
+0"
+#300
+b100 (
+#310
+b1000 D
+1,
+0-
+b10010000 !
+b10010000 0
+b10010000 H
+b10010000 +
+b10010000 K
+b110 E
+1"
+#320
+0"
+#330
+b101 (
+#340
+b1010 D
+1,
+b1000 E
+b1001000 !
+b1001000 0
+b1001000 H
+b1001000 +
+b1001000 K
+1"
+#350
+0"
+#360
+b110 (
+#370
+b0 D
+1/
+1,
+b100100 !
+b100100 0
+b100100 H
+b100100 +
+b100100 K
+b1010 E
+1"
+#380
+0"
+#390
+b111 (
+#400
+0/
+0,
+b0 E
+b10010 !
+b10010 0
+b10010 H
+b10010 +
+b10010 K
+1"
+#410
+0"
+#420
+b1000 (
+#430
+1"
+#440
+0"
+#450
+b1001 (
+#460
+1"
+#470
+0"
+#480
+b1010 (
+#490
+b1111 %
+b1111 *
+b1111 G
+#510
+b1111 $
+b1111 )
+b1111 F
+#530
+1&
+#550
+1"
+#560
+0"
+#580
+0&
+#600
+b1 D
+1'
+#620
+b10 D
+1.
+13
+18
+b1 E
+1"
+#630
+0"
+#650
+b10 D
+0'
+#660
+b0 (
+#670
+14
+15
+b11 D
+08
+03
+0.
+b0 !
+b0 0
+b0 H
+b0 +
+b0 K
+b1111 1
+b1111 J
+b11110000 2
+b11110000 I
+b10 E
+1"
+#680
+0"
+#690
+b1 (
+#700
+b100 D
+1-
+b11 E
+1"
+#710
+0"
+#720
+b10 (
+#730
+b101 D
+1,
+0-
+b11110000 !
+b11110000 0
+b11110000 H
+b11110000 +
+b11110000 K
+b100 E
+1"
+#740
+0"
+#750
+b11 (
+#760
+b110 D
+1-
+0,
+b101 E
+b1111000 !
+b1111000 0
+b1111000 H
+b1111000 +
+b1111000 K
+1"
+#770
+0"
+#780
+b100 (
+#790
+b111 D
+1,
+0-
+b101101000 !
+b101101000 0
+b101101000 H
+b101101000 +
+b101101000 K
+b110 E
+1"
+#800
+0"
+#810
+b101 (
+#820
+b1000 D
+1-
+0,
+b111 E
+b10110100 !
+b10110100 0
+b10110100 H
+b10110100 +
+b10110100 K
+1"
+#830
+0"
+#840
+b110 (
+#850
+b1001 D
+1,
+0-
+b110100100 !
+b110100100 0
+b110100100 H
+b110100100 +
+b110100100 K
+b1000 E
+1"
+#860
+0"
+#870
+b111 (
+#880
+b1010 D
+1-
+0,
+b1001 E
+b11010010 !
+b11010010 0
+b11010010 H
+b11010010 +
+b11010010 K
+1"
+#890
+0"
+#900
+b1000 (
+#910
+b0 D
+1/
+1,
+0-
+b111000010 !
+b111000010 0
+b111000010 H
+b111000010 +
+b111000010 K
+b1010 E
+1"
+#920
+0"
+#930
+b1001 (
+#940
+0/
+0,
+b0 E
+b11100001 !
+b11100001 0
+b11100001 H
+b11100001 +
+b11100001 K
+1"
+#950
+0"
+#960
+b1010 (
+#970
+b0 %
+b0 *
+b0 G
+#990
+b1100 $
+b1100 )
+b1100 F
+#1010
+1&
+#1030
+1"
+#1040
+0"
+#1060
+0&
+#1080
+b1 D
+1'
+#1100
+b10 D
+1.
+13
+18
+b1 E
+1"
+#1110
+0"
+#1130
+b10 D
+0'
+#1140
+b0 (
+#1150
+04
+05
+06
+07
+b100 D
+08
+03
+0.
+b0 !
+b0 0
+b0 H
+b0 +
+b0 K
+b0 1
+b0 J
+b11000000 2
+b11000000 I
+b10 E
+1"
+#1160
+0"
+#1170
+b1 (
+#1180
+b110 D
+1,
+b100 E
+1"
+#1190
+0"
+#1200
+b10 (
+#1210
+b1000 D
+1,
+b110 E
+1"
+#1220
+0"
+#1230
+b11 (
+#1240
+b1010 D
+1,
+b1000 E
+1"
+#1250
+0"
+#1260
+b100 (
+#1270
+b0 D
+1/
+1,
+b1010 E
+1"
+#1280
+0"
+#1290
+b101 (
+#1300
+0/
+0,
+b0 E
+1"
+#1310
+0"
+#1320
+b110 (
+#1330
+1"
+#1340
+0"
+#1350
+b111 (
+#1360
+1"
+#1370
+0"
+#1380
+b1000 (
+#1390
+1"
+#1400
+0"
+#1410
+b1001 (
+#1420
+1"
+#1430
+0"
+#1440
+b1010 (
+#1450
+b1 %
+b1 *
+b1 G
+#1470
+b10 $
+b10 )
+b10 F
+#1490
+1&
+#1510
+1"
+#1520
+0"
+#1540
+0&
+#1560
+b1 D
+1'
+#1580
+b10 D
+1.
+13
+18
+b1 E
+1"
+#1590
+0"
+#1610
+b10 D
+0'
+#1620
+b0 (
+#1630
+17
+b11 D
+08
+03
+0.
+b1 1
+b1 J
+b100000 2
+b100000 I
+b10 E
+1"
+#1640
+0"
+#1650
+b1 (
+#1660
+b100 D
+1-
+b11 E
+1"
+#1670
+0"
+#1680
+b10 (
+#1690
+b110 D
+1,
+0-
+b100000 !
+b100000 0
+b100000 H
+b100000 +
+b100000 K
+b100 E
+1"
+#1700
+0"
+#1710
+b11 (
+#1720
+b1000 D
+1,
+b110 E
+b10000 !
+b10000 0
+b10000 H
+b10000 +
+b10000 K
+1"
+#1730
+0"
+#1740
+b100 (
+#1750
+b1010 D
+1,
+b1000 !
+b1000 0
+b1000 H
+b1000 +
+b1000 K
+b1000 E
+1"
+#1760
+0"
+#1770
+b101 (
+#1780
+b0 D
+1/
+1,
+b1010 E
+b100 !
+b100 0
+b100 H
+b100 +
+b100 K
+1"
+#1790
+0"
+#1800
+b110 (
+#1810
+0/
+0,
+b10 !
+b10 0
+b10 H
+b10 +
+b10 K
+b0 E
+1"
+#1820
+0"
+#1830
+b111 (
+#1840
+1"
+#1850
+0"
+#1860
+b1000 (
+#1870
+1"
+#1880
+0"
+#1890
+b1001 (
+#1900
+1"
+#1910
+0"
+#1920
+b1010 (
+#1930
+b0 %
+b0 *
+b0 G
+#1950
+b0 $
+b0 )
+b0 F
+#1970
+1&
+#1990
+1"
+#2000
+0"
+#2020
+0&
+#2040
+b1 D
+1'
+#2060
+b10 D
+1.
+13
+18
+b1 E
+1"
+#2070
+0"
+#2090
+b10 D
+0'
+#2100
+b0 (
+#2110
+07
+b100 D
+08
+03
+0.
+b0 !
+b0 0
+b0 H
+b0 +
+b0 K
+b0 1
+b0 J
+b0 2
+b0 I
+b10 E
+1"
+#2120
+0"
+#2130
+b1 (
+#2140
+b110 D
+1,
+b100 E
+1"
+#2150
+0"
+#2160
+b10 (
+#2170
+b1000 D
+1,
+b110 E
+1"
+#2180
+0"
+#2190
+b11 (
+#2200
+b1010 D
+1,
+b1000 E
+1"
+#2210
+0"
+#2220
+b100 (
+#2230
+b0 D
+1/
+1,
+b1010 E
+1"
+#2240
+0"
+#2250
+b101 (
+#2260
+0/
+0,
+b0 E
+1"
+#2270
+0"
+#2280
+b110 (
+#2290
+1"
+#2300
+0"
+#2310
+b111 (
+#2320
+1"
+#2330
+0"
+#2340
+b1000 (
+#2350
+1"
+#2360
+0"
+#2370
+b1001 (
+#2380
+1"
+#2390
+0"
+#2400
+b1010 (
