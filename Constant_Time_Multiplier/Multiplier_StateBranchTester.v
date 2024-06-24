@@ -4,7 +4,7 @@
 
 `include "Multiplier_StateBranch.v"
 
-module Mutliplier_StateBranch #(parameter WIDTH = 4)(
+module Mutliplier_StateBranchTester #(parameter WIDTH = 4)(
     input   clk,
 	input   rst,
     input   start,
@@ -13,8 +13,6 @@ module Mutliplier_StateBranch #(parameter WIDTH = 4)(
     input [WIDTH - 1:0] multipliertwo,
     input [WIDTH - 1:0] multiplicandtwo,
 
-
-	output [2*WIDTH - 1:0] product,
     output timingLeak,
     output timingLeakDone
 
