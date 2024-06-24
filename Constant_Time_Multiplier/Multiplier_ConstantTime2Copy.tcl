@@ -1,6 +1,6 @@
 analyze -sv Multiplier_Constant2CopyTester.v
 
-elaborate -top Multiplier_ConstantTime
+elaborate -top Multiplier_ConstantTimeTester
 
 clock clk
 reset rst
