@@ -4,17 +4,15 @@
 
 `include "Multiplier_ConstantTime.v"
 
-module Mutliplier_ConstantTime #(parameter WIDTH = 4)(
+module Mutliplier_ConstantTimeTester #(parameter WIDTH = 4)(
     input   clk,
 	input   rst,
     input   start,
-    input [WIDTH - 1:0] multiplierone,
-    input [WIDTH - 1:0] multiplicandone,
-    input [WIDTH - 1:0] multipliertwo,
-    input [WIDTH - 1:0] multiplicandtwo,
+	input [WIDTH - 1:0] multiplierOne,
+	input [WIDTH - 1:0] multiplicandOne,
+	input [WIDTH - 1:0] multiplierTwo,
+	input [WIDTH - 1:0] multiplicandTwo,
 
-
-	output [2*WIDTH - 1:0] product,
     output timingLeak,
     output timingLeakDone
 
