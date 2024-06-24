@@ -13,8 +13,6 @@ module Mutliplier_ConstantTimeTester #(parameter WIDTH = 4)(
     input [WIDTH - 1:0] multipliertwo,
     input [WIDTH - 1:0] multiplicandtwo,
 
-
-	output [2*WIDTH - 1:0] product,
     output timingLeak,
     output timingLeakDone
 
