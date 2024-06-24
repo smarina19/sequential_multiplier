@@ -80,8 +80,8 @@ always @( posedge clk) begin
                  (multiplicandReg[i] & carryIn[i]) |
                   (runningSumReg[i] & carryIn[i]);
         end
-        carryIn_t = carryIn & ((multiplicandReg_t | runningSum_t) << 1);
         // check if the carry-out from i should be tainted
+        carryIn_t = carryIn & ((multiplicandReg_t | runningSumReg_t) << 1);
         runningSumReg_t <= carryIn_t | runningSumReg_t | multiplicandReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
     end
 
