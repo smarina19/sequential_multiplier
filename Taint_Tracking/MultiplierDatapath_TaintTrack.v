@@ -74,28 +74,14 @@ always @( posedge clk) begin
         // carry taint logic
         carryIn[0] = 0;
         carryIn_t[0] = 0;
-        for (i = 0; i < 2 * WIDTH - 1; i = i + 1) begin
-
+        for (i = 0; i < 2 * WIDTH; i = i + 1) begin
             // check if there is a carry-out from i
-            if (((multiplicandReg[i] & runningSumReg[i]) | 
+            carryIn[i + 1] = (multiplicandReg[i] & runningSumReg[i]) | 
                  (multiplicandReg[i] & carryIn[i]) |
-                  (runningSumReg[i] & carryIn[i]))) 
-            begin
-                  carryIn[i + 1] = 1;
-
-                  // check if the carry-out from i should be tainted
-                  if (multiplicandReg_t[i] | runningSumReg_t[i]) begin
-                    carryIn_t[i + 1] = 1;
-                  end
-                  else begin
-                    carryIn_t[i + 1] = 0;
-                  end
-            end
-            else begin
-                carryIn[i + 1] = 0;
-                carryIn_t[i + 1] = 0;
-            end
+                  (runningSumReg[i] & carryIn[i]);
         end
+        carryIn_t = carryIn & ((multiplicandReg_t | runningSum_t) << 1);
+        // check if the carry-out from i should be tainted
         runningSumReg_t <= carryIn_t | runningSumReg_t | multiplicandReg_t | {WIDTH{rsclear_t}} | {WIDTH{rsload_t}} | {WIDTH{rsshr_t}};
     end
 
