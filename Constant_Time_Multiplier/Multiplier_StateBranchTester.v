@@ -8,10 +8,10 @@ module Mutliplier_StateBranchTester #(parameter WIDTH = 4)(
     input   clk,
 	input   rst,
     input   start,
-    input [WIDTH - 1:0] multiplierone,
-    input [WIDTH - 1:0] multiplicandone,
-    input [WIDTH - 1:0] multipliertwo,
-    input [WIDTH - 1:0] multiplicandtwo,
+    input [WIDTH - 1:0] multiplieroOne,
+    input [WIDTH - 1:0] multiplicandOne,
+    input [WIDTH - 1:0] multiplierTwo,
+    input [WIDTH - 1:0] multiplicandTwo,
 
     output timingLeak,
     output timingLeakDone
