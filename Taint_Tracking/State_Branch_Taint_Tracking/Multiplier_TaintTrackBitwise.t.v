@@ -1,5 +1,5 @@
 //===============================================================================
-// Testbench Module for Constant Time state branch Multiplier w/ taint tracking
+// Testbench Module for Constant Time Multiplier w/ taint tracking
 // some code adapted from ECE206 testing material
 //===============================================================================
 `timescale 1ns/100ps
@@ -31,8 +31,8 @@ module MultiplierTest;
 	reg [NUM_BITS - 1:0] multiplicand = 7'd0;
     wire [2 * NUM_BITS - 1:0] product;
     reg start_t = 0;
-    reg multiplier_t = 0;
-    reg multiplicand_t = 0;
+    reg [NUM_BITS - 1:0] multiplier_t = 0;
+    reg [NUM_BITS - 1:0] multiplicand_t = 0;
 
 	// Error Counts
 	reg [7:0] errors = 0;
