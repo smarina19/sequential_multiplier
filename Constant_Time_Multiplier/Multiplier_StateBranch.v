@@ -2,10 +2,10 @@
 // Multiplier Module (runs in constant time for all inputs)
 //==============================================================================
 
-`include "MultiplierControl_ConstantTime.v"
+`include "MultiplierControl_StateBranch.v"
 `include "../MultiplierDatapath.v"
 
-module Multiplier_StateBranch #(parameter WIDTH = 10000)(
+module Multiplier_StateBranch #(parameter WIDTH = 1024)(
 	input   clk,
 	input   rst,
     input   start,
@@ -46,7 +46,7 @@ module Multiplier_StateBranch #(parameter WIDTH = 10000)(
 	);
 
 	// Control
-	MultiplierControl_ConstantTime #(WIDTH) ctrl(
+	MultiplierControl_StateBranch #(WIDTH) ctrl(
 		.clk  (clk),
 		.rst  (rst),
         .start (start),

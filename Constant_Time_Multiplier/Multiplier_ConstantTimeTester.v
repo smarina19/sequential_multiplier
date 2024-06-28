@@ -4,7 +4,7 @@
 
 `include "Multiplier_ConstantTime.v"
 
-module Multiplier_ConstantTimeTester #(parameter WIDTH = 4)(
+module Multiplier_ConstantTimeTester #(parameter WIDTH = 3000)(
     input   clk,
 	input   rst,
     input   start,
