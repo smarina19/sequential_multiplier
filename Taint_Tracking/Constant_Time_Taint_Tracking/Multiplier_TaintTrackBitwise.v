@@ -3,7 +3,7 @@
 //==============================================================================
 
 `include "MultiplierControl_TaintTrackBitwise.v"
-`include "../MultiplierDatapath_TaintTrack1Bit.v"
+`include "../MultiplierDatapath_TaintTrack.v"
 
 module Multiplier_TaintTrackBitwise #(parameter WIDTH = 4)(
 	input   clk,
@@ -11,12 +11,12 @@ module Multiplier_TaintTrackBitwise #(parameter WIDTH = 4)(
     input   start,
     input   start_t,
     input [WIDTH - 1:0] multiplier,
-    input multiplier_t,
+    input [WIDTH - 1:0] multiplier_t,
     input [WIDTH - 1:0] multiplicand,
-    input multiplicand_t,
+    input [WIDTH - 1:0] multiplicand_t,
 
 	output [2*WIDTH - 1:0] product,
-    output product_t,
+    output [2*WIDTH - 1:0] product_t,
     output productDone,
     output productDone_t
 );
@@ -32,13 +32,13 @@ module Multiplier_TaintTrackBitwise #(parameter WIDTH = 4)(
 	wire mdld;
     wire mdld_t;
     wire [WIDTH - 1:0] multiplierReg;
-    wire multiplierReg_t;
+    wire [WIDTH - 1:0] multiplierReg_t;
     wire [WIDTH * 2:0] runningSumReg;
-    wire runningSumReg_t;
+    wire [WIDTH * 2:0] runningSumReg_t;
     wire [WIDTH * 2:0] multiplicandReg;
-    wire  multiplicandReg_t;
+    wire [WIDTH * 2:0] multiplicandReg_t;
 
-	MultiplierDatapath_TaintTrack1Bit #(WIDTH) dpath(
+	MultiplierDatapath_TaintTrack #(WIDTH) dpath(
 		.clk    (clk),
         .multiplier (multiplier),
         .multiplier_t (multiplier_t),

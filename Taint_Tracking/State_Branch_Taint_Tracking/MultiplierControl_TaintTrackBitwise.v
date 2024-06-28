@@ -27,29 +27,34 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 
 	// Inputs from Datapath
     input [WIDTH - 1:0] multiplierReg,
-    input multiplierReg_t
+    input [WIDTH - 1:0] multiplierReg_t
 );
 	// Local Vars
 	// # of states = 2 * WIDTH + 3
     localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
     reg [STATE_WIDTH - 1:0] state;
-    reg state_t;
+    reg [STATE_WIDTH - 1:0] state_t;
 	reg [STATE_WIDTH - 1:0] next_state;
-    reg next_state_t;
+    reg [STATE_WIDTH - 1:0] next_state_t;
 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-    localparam FINAL = 2 * (WIDTH + 1) + WIDTH;
+    localparam FINAL = 2 * (WIDTH + 1);
     // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
 
 	// Output Combinational Logic
 	always @( * ) begin
 		// Set defaults
         rsload = 0;
+        rsload_t = 0;
         rsclear = 0;
+        rsclear_t = 0;
         rsshr = 0;
+        rsshr_t = 0;
         mrld = 0;
+        mrld_t = 0;
         mdld = 0;
+        mdld_t = 0;
         productDone = 0;
         if (state == START) begin
         end
@@ -58,26 +63,28 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
             mrld = 1;
             rsclear = 1;
 
-            mdld_t = state_t;
-            mrld_t = state_t;
-            rsclear_t = state_t;
+            mdld_t = |state_t;
+            mrld_t = |state_t;
+            rsclear_t = |state_t;
         end
         else if (state == FINAL) begin
             rsshr = 1;
             productDone = 1;
 
-            rsshr_t = state_t;
-            productDone_t = state_t;
-        end
-        else if (state >= (WIDTH + 1) * 2) begin
-            rsshr = 1;
-
-            rsshr_t = state_t;
+            rsshr_t = |state_t;
+            productDone_t = |state_t;
         end
         else if (state[0] == 1) begin
-            rsload = 1;
+            if (multiplierReg[((state - 1) >> 1) - 1]) begin
+                rsload = 1;
+            end
 
-            rsload_t = state_t;
+            rsload_t = (|state_t) | (multiplierReg[((state - 1) >> 1) - 1]);
+        end
+        else begin
+            rsshr = 1;
+
+            rsshr_t = |state_t;
         end
 	end
 
@@ -90,28 +97,16 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 			if (start) begin
 				next_state = INIT;
 			end
-            next_state_t = next_state_t | start_t;
+            next_state_t = next_state_t | {STATE_WIDTH{start_t}};
 		end
 		else if (state == INIT) begin
-			next_state = (WIDTH + 1) * 2;
+			next_state = 2;
 		end
         else if (state == FINAL) begin
             next_state = START;
         end
-        else if (state >= (WIDTH + 1) * 2) begin
-            if (multiplierReg[state - (WIDTH + 1) * 2]) begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 3;
-            end
-            else begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 2;
-            end
-            next_state_t = next_state_t | multiplierReg_t;
-        end
-        else if (state[0] == 0) begin
-            next_state = (next_state / 2) + (WIDTH + 1) * 2;
-        end
         else begin
-            next_state = ((next_state - 1) / 2) + (WIDTH + 1) * 2;
+            next_state = next_state + 1;
         end
 	end
 

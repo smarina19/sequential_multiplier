@@ -4,7 +4,7 @@
 //===============================================================================
 `timescale 1ns/100ps
 
-`include "Multiplier_TaintTrackBitwise.v"
+`include "Multiplier_TaintTrackWordLvl.v"
 
 `define ASSERT_EQ(ONE, TWO, MSG)               \
 	begin                                      \
@@ -31,8 +31,8 @@ module MultiplierTest;
 	reg [NUM_BITS - 1:0] multiplicand = 7'd0;
     wire [2 * NUM_BITS - 1:0] product;
     reg start_t = 0;
-    reg [NUM_BITS - 1:0] multiplier_t = 0;
-    reg [NUM_BITS - 1:0] multiplicand_t = 0;
+    reg multiplier_t = 0;
+    reg multiplicand_t = 0;
 
 	// Error Counts
 	reg [7:0] errors = 0;
@@ -44,7 +44,7 @@ module MultiplierTest;
 	end
 
 	// Multiplier Module
-	Multiplier_TaintTrackBitwise #(NUM_BITS) multipliertester(
+	Multiplier_TaintTrackWordLvl #(NUM_BITS) multipliertester(
         .clk    (clk),
 		.rst    (rst),
         .start  (start),
