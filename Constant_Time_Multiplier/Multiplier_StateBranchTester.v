@@ -4,7 +4,7 @@
 
 `include "Multiplier_StateBranch.v"
 
-module Multiplier_StateBranchTester #(parameter WIDTH = 1024)(
+module Multiplier_StateBranchTester #(parameter WIDTH = 8)(
     input   clk,
 	input   rst,
     input   start,
