@@ -31,7 +31,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 );
 	// Local Vars
 	// # of states = 2 * WIDTH + 3
-    localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
+    localparam STATE_WIDTH = $clog2(2 * WIDTH + 2);
     reg [STATE_WIDTH - 1:0] state;
     reg state_t;
 	reg [STATE_WIDTH - 1:0] next_state;
@@ -39,8 +39,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-    localparam FINAL = 2 * (WIDTH + 1);
-    // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
+    localparam FINAL = 2 * WIDTH + 1;
 
 	// Output Combinational Logic
 	always @( * ) begin
@@ -69,8 +68,8 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             rsshr_t = state_t;
             productDone_t = state_t;
         end
-        else if (state[0] == 1) begin
-            if (multiplierReg[((state - 1) >> 1) - 1]) begin
+        else if (state[0] == 0) begin
+            if (multiplierReg[(state >> 1) - 1]) begin
                 rsload = 1;
             end
 
