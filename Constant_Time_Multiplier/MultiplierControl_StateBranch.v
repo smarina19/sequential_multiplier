@@ -23,14 +23,13 @@ module MultiplierControl_StateBranch #(parameter WIDTH = 4)(
 );
 	// Local Vars
 	// # of states = 2 * WIDTH + 3
-    localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
+    localparam STATE_WIDTH = $clog2(3 * WIDTH + 3);
     reg [STATE_WIDTH - 1:0] state;
 	reg [STATE_WIDTH - 1:0] next_state;
 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-    localparam FINAL = 2 * (WIDTH + 1) + WIDTH;
-    // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1) + N
+    localparam FINAL = 3 * WIDTH + 2;
 
 	// Output Combinational Logic
 	always @( * ) begin
@@ -52,7 +51,7 @@ module MultiplierControl_StateBranch #(parameter WIDTH = 4)(
             rsshr = 1;
             productDone = 1;
         end
-        else if (state >= (WIDTH + 1) * 2) begin
+        else if (state >= 2 * WIDTH + 2) begin
             rsshr = 1;
         end
         else if (state[0] == 1) begin
@@ -70,24 +69,24 @@ module MultiplierControl_StateBranch #(parameter WIDTH = 4)(
 			end
 		end
 		else if (state == INIT) begin
-            next_state = (WIDTH + 1) * 2;
+            next_state = 2 * WIDTH + 2;
 		end
         else if (state == FINAL) begin
             next_state = START;
         end
-        else if (state >= (WIDTH + 1) * 2) begin
-            if (multiplierReg[state - (WIDTH + 1) * 2]) begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 3;
+        else if (state >= 2 * WIDTH + 2) begin
+            if (multiplierReg[state - (2 * WIDTH) - 2]) begin
+                next_state = (state - (2 * WIDTH) - 1) * 2 + 1;
             end
             else begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 2;
+                next_state = (state - (2 * WIDTH) - 1) * 2;
             end
         end
         else if (state[0] == 0) begin
-            next_state = (next_state / 2) + (WIDTH + 1) * 2;
+            next_state = 2 * WIDTH + 2 + (state / 2);
         end
         else begin
-            next_state = ((next_state - 1) / 2) + (WIDTH + 1) * 2;
+            next_state = 2 * WIDTH + 2 + ((state - 1) / 2);
         end
 	end
 

@@ -30,7 +30,6 @@ module MultiplierControl_ConstantTime #(parameter WIDTH = 4)(
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
     localparam FINAL = 2 * WIDTH + 1;
-    // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
 
 	// Output Combinational Logic
 	always @( * ) begin
