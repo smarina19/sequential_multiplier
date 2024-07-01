@@ -52,8 +52,8 @@ module MultiplierControl_ConstantTime #(parameter WIDTH = 4)(
             rsshr = 1;
             productDone = 1;
         end
-        else if (state[0] == 1) begin
-            if (multiplierReg[((state - 1) >> 1) - 1]) begin
+        else if (state[0] == 0) begin
+            if (multiplierReg[(state >> 1) - 1]) begin
                 rsload = 1;
             end
         end
