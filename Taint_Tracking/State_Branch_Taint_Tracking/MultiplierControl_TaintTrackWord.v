@@ -39,8 +39,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-    localparam FINAL = 2 * (WIDTH + 1) + WIDTH;
-    // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
+    localparam FINAL = 3 * WIDTH + 2;
 
 	// Output Combinational Logic
 	always @( * ) begin
@@ -69,7 +68,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             rsshr_t = state_t;
             productDone_t = state_t;
         end
-        else if (state >= (WIDTH + 1) * 2) begin
+        else if (state >= 2 * WIDTH + 2) begin
             rsshr = 1;
 
             rsshr_t = state_t;
@@ -93,25 +92,25 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             next_state_t = next_state_t | start_t;
 		end
 		else if (state == INIT) begin
-			next_state = (WIDTH + 1) * 2;
+			next_state = 2 * WIDTH + 2;
 		end
         else if (state == FINAL) begin
             next_state = START;
         end
-        else if (state >= (WIDTH + 1) * 2) begin
-            if (multiplierReg[state - (WIDTH + 1) * 2]) begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 3;
+        else if (state >= 2 * WIDTH + 2) begin
+            if (multiplierReg[state - (2 * WIDTH) - 2]) begin
+                next_state = (state - (2 * WIDTH) - 1) * 2 + 1;
             end
             else begin
-                next_state = (state - (WIDTH + 1) * 2) * 2 + 2;
+                next_state = (state - (2 * WIDTH) - 1) * 2;
             end
             next_state_t = next_state_t | multiplierReg_t;
         end
         else if (state[0] == 0) begin
-            next_state = (next_state / 2) + (WIDTH + 1) * 2;
+            next_state = 2 * WIDTH + 2 + (state / 2);
         end
         else begin
-            next_state = ((next_state - 1) / 2) + (WIDTH + 1) * 2;
+            next_state = 2 * WIDTH + 2 + ((state - 1) / 2);
         end
 	end
 
