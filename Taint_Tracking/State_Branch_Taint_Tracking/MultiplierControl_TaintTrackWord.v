@@ -31,7 +31,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 );
 	// Local Vars
 	// # of states = 2 * WIDTH + 3
-    localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
+    localparam STATE_WIDTH = $clog2(3 * WIDTH + 3);
     reg [STATE_WIDTH - 1:0] state;
     reg state_t;
 	reg [STATE_WIDTH - 1:0] next_state;

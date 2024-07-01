@@ -31,7 +31,7 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 );
 	// Local Vars
 	// # of states = 2 * WIDTH + 3
-    localparam STATE_WIDTH = $clog2(2 * WIDTH + 3);
+    localparam STATE_WIDTH = $clog2(3 * WIDTH + 3);
     reg [STATE_WIDTH - 1:0] state;
     reg [STATE_WIDTH - 1:0] state_t;
 	reg [STATE_WIDTH - 1:0] next_state;
@@ -39,7 +39,7 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
-    localparam FINAL = 2 * (WIDTH + 1);
+    localparam FINAL = 2 * (WIDTH + 1) + WIDTH;
     // BIT_n = 2*n, BIT_n_TRUE = 2*n + 1, FINAL = 2*(N+1)
 
 	// Output Combinational Logic
@@ -74,17 +74,15 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
             rsshr_t = |state_t;
             productDone_t = |state_t;
         end
-        else if (state[0] == 1) begin
-            if (multiplierReg[((state - 1) >> 1) - 1]) begin
-                rsload = 1;
-            end
-
-            rsload_t = (|state_t) | (multiplierReg[((state - 1) >> 1) - 1]);
-        end
-        else begin
+        else if (state >= (WIDTH + 1) * 2) begin
             rsshr = 1;
 
             rsshr_t = |state_t;
+        end
+        else if (state[0] == 1) begin
+            rsload = 1;
+
+            rsload_t = |state_t;
         end
 	end
 
@@ -105,8 +103,20 @@ module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
         else if (state == FINAL) begin
             next_state = START;
         end
+        else if (state >= (WIDTH + 1) * 2) begin
+            if (multiplierReg[state - (WIDTH + 1) * 2]) begin
+                next_state = (state - (WIDTH + 1) * 2) * 2 + 3;
+            end
+            else begin
+                next_state = (state - (WIDTH + 1) * 2) * 2 + 2;
+            end
+            next_state_t = next_state_t | {STATE_WIDTH{multiplierReg_t[state - (WIDTH + 1) * 2]}};
+        end
+        else if (state[0] == 0) begin
+            next_state = (next_state / 2) + (WIDTH + 1) * 2;
+        end
         else begin
-            next_state = next_state + 1;
+            next_state = ((next_state - 1) / 2) + (WIDTH + 1) * 2;
         end
 	end
 
