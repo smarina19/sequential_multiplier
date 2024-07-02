@@ -5,7 +5,7 @@
 `include "MultiplierControl_TaintTrackBitwise.v"
 `include "../MultiplierDatapath_TaintTrack.v"
 
-module Multiplier_TaintTrackBitwise #(parameter WIDTH = 8)(
+module Multiplier_TaintTrackBitwise #(parameter WIDTH = 16)(
 	input   clk,
 	input   rst,
     input   start,
