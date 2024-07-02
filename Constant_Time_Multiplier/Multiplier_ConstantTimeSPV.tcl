@@ -10,4 +10,4 @@ check_spv -create -from multiplier -to {productDone}
 
 prove -all
 
-engine_mode B
+select_engines -engines "B"
