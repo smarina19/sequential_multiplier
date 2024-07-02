@@ -12,3 +12,5 @@ assert {productDone -> !productDone_t}
 # Set the time limit to 1 hour (3600 seconds)
 set_prove_time_limit 3600
 prove -all
+
+engine_mode B
