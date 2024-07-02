@@ -9,3 +9,5 @@ reset rst
 check_spv -create -from multiplier -to {productDone}
 
 prove -all
+
+engine_mode B
