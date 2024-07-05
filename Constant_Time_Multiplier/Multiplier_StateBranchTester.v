@@ -4,7 +4,7 @@
 
 `include "Multiplier_StateBranch.v"
 
-module Multiplier_StateBranchTester #(parameter WIDTH = 1024)(
+module Multiplier_StateBranchTester #(parameter WIDTH = 128)(
     input   clk,
 	input   rst,
     input   start,
@@ -44,7 +44,7 @@ Multiplier_StateBranch #(WIDTH) multTwo(
     .productDone(productDoneTwo)
 );
 
-assign timingLeakDone = productDoneOne || productDoneTwo;
-assign timingLeak = ~(productDoneOne && productDoneTwo);
+assign oneDone = productDoneOne || productDoneTwo;
+assign bothDone = productDoneOne && productDoneTwo;
 
 endmodule

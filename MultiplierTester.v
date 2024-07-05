@@ -78,8 +78,8 @@ Multiplier #(WIDTH) multFour(
     .productDone(productDoneFour)
 );
 
-assign timingLeakDone = productDoneOne || productDoneTwo;
-assign timingLeak = ~(productDoneOne && productDoneTwo);
+assign oneDone = productDoneOne || productDoneTwo;
+assign bothDone = productDoneOne && productDoneTwo;
 
 // assign commutativeProp = ~(productOne & productTwo);
 // assign assocProp = ~(productTwo & productFour);

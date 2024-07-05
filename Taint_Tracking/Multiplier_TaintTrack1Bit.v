@@ -5,7 +5,7 @@
 `include "MultiplierControl_TaintTrack1Bit.v"
 `include "MultiplierDatapath_TaintTrack1Bit.v"
 
-module Multiplier_TaintTrack1Bit #(parameter WIDTH = 1024)(
+module Multiplier_TaintTrack1Bit #(parameter WIDTH = 8192)(
 	input   clk,
 	input   rst,
     input   start,

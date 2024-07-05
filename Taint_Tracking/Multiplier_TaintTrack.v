@@ -5,7 +5,7 @@
 `include "MultiplierControl_TaintTrack.v"
 `include "MultiplierDatapath_TaintTrack.v"
 
-module Multiplier_TaintTrack #(parameter WIDTH = 1024)(
+module Multiplier_TaintTrack #(parameter WIDTH = 4096)(
 	input   clk,
 	input   rst,
     input   start,

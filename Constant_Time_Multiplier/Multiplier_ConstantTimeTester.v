@@ -4,7 +4,7 @@
 
 `include "Multiplier_ConstantTime.v"
 
-module Multiplier_ConstantTimeTester #(parameter WIDTH = 4056)(
+module Multiplier_ConstantTimeTester #(parameter WIDTH = 10000)(
     input   clk,
 	input   rst,
     input   start,
@@ -44,7 +44,7 @@ Multiplier_ConstantTime #(WIDTH) multTwo(
     .productDone(productDoneTwo)
 );
 
-assign timingLeakDone = productDoneOne || productDoneTwo;
-assign timingLeak = ~(productDoneOne && productDoneTwo);
+assign oneDone = productDoneOne || productDoneTwo;
+assign bothDone = productDoneOne && productDoneTwo;
 
 endmodule

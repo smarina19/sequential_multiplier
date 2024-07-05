@@ -5,7 +5,7 @@
 `include "MultiplierControl_StateBranch.v"
 `include "../MultiplierDatapath.v"
 
-module Multiplier_StateBranch #(parameter WIDTH = 512)(
+module Multiplier_StateBranch #(parameter WIDTH = 8192)(
 	input   clk,
 	input   rst,
     input   start,
