@@ -106,7 +106,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 	always @(posedge clk) begin
 
         if (rst) begin
-			p_START <= 1
+			p_START <= 1;
             bitCounter <= 0;
 		end
 		
@@ -133,7 +133,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             bitCounter <= bitCounter + 1;
             bitCounter_t <= p_SHIFT_t;
             p_SHIFT <= 0;
-            
+
             if (multiplierReg[bitCounter]) begin
                 p_LOAD <= 1;
             end
