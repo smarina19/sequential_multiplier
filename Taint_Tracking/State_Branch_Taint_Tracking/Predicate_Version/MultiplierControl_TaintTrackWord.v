@@ -112,7 +112,12 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             next_state_t = next_state_t | multiplierReg_t | bitCounter_t;
         end
         else begin
-            next_state = SHIFT;
+            if (bitCounter == WIDTH) begin
+                next_state = FINAL;
+            end
+            else begin
+                next_state = SHIFT;
+            end
         end
 	end
 
