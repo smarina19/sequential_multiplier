@@ -39,6 +39,14 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
     reg [COUNTER_WIDTH - 1:0] bitCounter;
     reg bitCounter_t;
 
+    // predicates
+    reg p_START;
+    reg p_INIT;
+    reg p_SHIFT;
+    reg p_NOP;
+    reg p_LOAD;
+    reg p_FINAL;
+
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
     localparam SHIFT = 4'd2;
@@ -55,9 +63,18 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
         mrld = 0;
         mdld = 0;
         productDone = 0;
+
+        p_START = 0;
+        p_INIT = 0;
+        p_SHIFT = 0;
+        p_NOP = 0;
+        p_LOAD = 0;
+        p_FINAL = 0;
         if (state == START) begin
+            p_START = 1;
         end
         else if (state == INIT) begin
+            p_INIT = 1;
             mdld = 1;
             mrld = 1;
             rsclear = 1;
@@ -67,6 +84,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             rsclear_t = state_t;
         end
         else if (state == FINAL) begin
+            p_FINAL = 1;
             rsshr = 1;
             productDone = 1;
 
@@ -74,14 +92,19 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             productDone_t = state_t;
         end
         else if (state == SHIFT) begin
+            p_SHIFT = 1;
             rsshr = 1;
 
             rsshr_t = state_t;
         end
         else if (state == LOAD) begin
+            p_LOAD = 1;
             rsload = 1;
 
             rsload_t = state_t;
+        end
+        else begin
+            p_NOP = 1;
         end
 	end
 
