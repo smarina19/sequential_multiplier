@@ -31,10 +31,6 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 );
 	// Local Vars
 	// # of states = 6
-    reg [2:0] state;
-    reg state_t;
-	reg [2:0] next_state;
-    reg next_state_t;
     localparam COUNTER_WIDTH = $clog2(WIDTH);
     reg [COUNTER_WIDTH - 1:0] bitCounter;
     reg bitCounter_t;
