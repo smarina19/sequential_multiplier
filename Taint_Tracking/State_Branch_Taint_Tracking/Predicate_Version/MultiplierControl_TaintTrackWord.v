@@ -141,7 +141,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
                 p_NOP <= 1;
             end
             p_LOAD_t <= p_SHIFT_t | multiplierReg_t | bitCounter_t;
-            p_NOP_T <= p_SHIFT_t | multiplierReg_t | bitCounter_t;
+            p_NOP_t <= p_SHIFT_t | multiplierReg_t | bitCounter_t;
         end
         else begin
             if (bitCounter == WIDTH) begin
