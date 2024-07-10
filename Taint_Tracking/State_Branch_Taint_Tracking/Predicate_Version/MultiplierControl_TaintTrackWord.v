@@ -47,6 +47,14 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
     reg p_LOAD;
     reg p_FINAL;
 
+    // predicate taints
+    reg p_START_t;
+    reg p_INIT_t;
+    reg p_SHIFT_t;
+    reg p_NOP_t;
+    reg p_LOAD_t;
+    reg p_FINAL_t;
+
 	localparam START = 4'd0;
 	localparam INIT = 4'd1;
     localparam SHIFT = 4'd2;
@@ -64,101 +72,91 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
         mdld = 0;
         productDone = 0;
 
-        p_START = 0;
-        p_INIT = 0;
-        p_SHIFT = 0;
-        p_NOP = 0;
-        p_LOAD = 0;
-        p_FINAL = 0;
-        if (state == START) begin
-            p_START = 1;
-        end
-        else if (state == INIT) begin
-            p_INIT = 1;
+        // is this taint logic correct?
+        if (p_INIT) begin
             mdld = 1;
             mrld = 1;
             rsclear = 1;
 
-            mdld_t = state_t;
-            mrld_t = state_t;
-            rsclear_t = state_t;
+            mdld_t = p_INIT_t;
+            mrld_t = p_INIT_t;
+            rsclear_t = p_INIT_t;
         end
-        else if (state == FINAL) begin
-            p_FINAL = 1;
+        else if (p_FINAL) begin
             rsshr = 1;
             productDone = 1;
 
-            rsshr_t = state_t;
-            productDone_t = state_t;
+            rsshr_t = p_FINAL_t;
+            productDone_t = p_FINAL_t;
         end
-        else if (state == SHIFT) begin
-            p_SHIFT = 1;
+        else if (p_SHIFT) begin
             rsshr = 1;
 
-            rsshr_t = state_t;
+            rsshr_t = p_SHIFT_t;
         end
-        else if (state == LOAD) begin
-            p_LOAD = 1;
+        else if (p_LOAD) begin
             rsload = 1;
 
-            rsload_t = state_t;
-        end
-        else begin
-            p_NOP = 1;
+            rsload_t = p_LOAD_t;
         end
 	end
 
-	// Next State Combinational Logic
-	always @( * ) begin
-		next_state = state;
-        next_state_t = state_t;
+	// Next State Logic
+    // this taint logic seems fishy
+	always @(posedge clk) begin
+
+        if (rst) begin
+			p_START <= 1
+            bitCounter <= 0;
+		end
 		
-		if (state == START) begin
+		else if (p_START) begin
 			if (start) begin
-				next_state = INIT;
+				p_INIT <= 1;
+                p_START <= 0;
 			end
-            next_state_t = next_state_t | start_t;
+            p_INIT_t <= p_START_t | start_t;
 		end
-		else if (state == INIT) begin
-			next_state = SHIFT;
+		else if (p_INIT) begin
+			p_SHIFT <= 1;
+            p_INIT <= 0;
+
+            p_SHIFT_t <= p_INIT_t;
 		end
-        else if (state == FINAL) begin
-            next_state = START;
+        else if (p_FINAL) begin
+            p_START <= 1;
+            p_FINAL <= 0;
+
+            p_START_t <= p_FINAL_t;
         end
-        else if (state == SHIFT) begin
+        else if (p_SHIFT) begin
+            bitCounter <= bitCounter + 1;
+            bitCounter_t <= p_SHIFT_t;
+            p_SHIFT <= 0;
+            
             if (multiplierReg[bitCounter]) begin
-                next_state = LOAD;
+                p_LOAD <= 1;
             end
             else begin
-                next_state = NOP;
+                p_NOP <= 1;
             end
-            next_state_t = next_state_t | multiplierReg_t | bitCounter_t;
+            p_LOAD_t <= p_SHIFT_t | multiplierReg_t | bitCounter_t;
+            p_NOP_T <= p_SHIFT_t | multiplierReg_t | bitCounter_t;
         end
         else begin
             if (bitCounter == WIDTH) begin
-                next_state = FINAL;
+                p_FINAL <= 1;
+                p_LOAD <= 0;
+                p_NOP <= 0;
             end
             else begin
-                next_state = SHIFT;
+                p_SHIFT <= 1;
+                p_LOAD <= 0;
+                p_NOP <= 0;
             end
+            p_FINAL_t <= bitCounter_t;
+            p_SHIFT_t <= bitCounter_t;
         end
-	end
-
-	// State Update Sequential Logic
-	always @(posedge clk) begin
-		if (rst) begin
-			state <= START;
-            bitCounter <= 0;
-		end
-		else begin
-			// Update state to next state
-			state <= next_state;
-            state_t <= next_state_t;
-            if (state == SHIFT) begin
-                bitCounter <= bitCounter + 1;
-                bitCounter_t <= state_t;
-            end
-		end
 	end
 
 endmodule
