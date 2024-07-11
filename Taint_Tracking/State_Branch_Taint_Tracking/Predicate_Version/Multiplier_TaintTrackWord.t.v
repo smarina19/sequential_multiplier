@@ -135,6 +135,7 @@ module MultiplierTest;
             `CLOCK;
         end
         `ASSERT_EQ(product, 2, "Product is incorrect");
+        $display("%b", product);
 
         // 0 x 0 
         `SET(multiplier, 0)
