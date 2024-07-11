@@ -130,7 +130,6 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             else begin
                 p_NOP <= 1;
             end
-            bitCounter <= bitCounter + 1;
         end
         if (p_LN) begin
             if (p_COUNT_DONE) begin
@@ -143,17 +142,18 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
                 p_LOAD <= 0;
                 p_NOP <= 0;
             end
+            bitCounter <= bitCounter + 1;
         end
 
-        p_INIT_t <= (p_START_t & start_t) | (p_START_t & start) | (p_START & start_t);
-        p_SHIFT_t <= p_INIT_t;
-        p_START_t <= p_FINAL_t;
-        bitCounter_t <= p_SHIFT_t;
-        p_LOAD_t <= (p_SHIFT_t & (multiplierReg_t | bitCounter_t)) | (p_SHIFT_t & multiplierReg[bitCounter]) | (p_SHIFT & (multiplierReg_t | bitCounter_t));
-        p_NOP_t <= (p_SHIFT_t & (multiplierReg_t | bitCounter_t)) | (p_SHIFT_t & multiplierReg[bitCounter]) | (p_SHIFT & (multiplierReg_t | bitCounter_t));
-        p_LN_t <= p_SHIFT_t;
-        p_FINAL_t <= (p_LN_t & p_COUNT_DONE_t) | (p_LN_t & p_COUNT_DONE) | (p_LN | p_COUNT_DONE_t);
-        p_SHIFT_t <= (p_LN_t & p_COUNT_DONE_t) | (p_LN_t & p_COUNT_DONE) | (p_LN | p_COUNT_DONE_t);
+        p_INIT_t <= p_INIT_t | (p_START_t & start_t) | (p_START_t & start) | (p_START & start_t);
+        p_SHIFT_t <= p_SHIFT_t | p_INIT_t;
+        p_START_t <= p_START_t | p_FINAL_t;
+        bitCounter_t <= bitCounter_t | p_SHIFT_t;
+        p_LOAD_t <= p_LOAD_t | (p_SHIFT_t & (multiplierReg_t | bitCounter_t)) | (p_SHIFT_t & multiplierReg[bitCounter]) | (p_SHIFT & (multiplierReg_t | bitCounter_t));
+        p_NOP_t <= p_NOP_t | (p_SHIFT_t & (multiplierReg_t | bitCounter_t)) | (p_SHIFT_t & multiplierReg[bitCounter]) | (p_SHIFT & (multiplierReg_t | bitCounter_t));
+        p_LN_t <= p_LN_t | p_SHIFT_t;
+        p_FINAL_t <= p_FINAL_t | (p_LN_t & p_COUNT_DONE_t) | (p_LN_t & p_COUNT_DONE) | (p_LN | p_COUNT_DONE_t);
+        p_SHIFT_t <= p_SHIFT_t | (p_LN_t & p_COUNT_DONE_t) | (p_LN_t & p_COUNT_DONE) | (p_LN | p_COUNT_DONE_t);
 	end
 
 endmodule
