@@ -152,7 +152,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             end
         end
 
-        p_INIT_t <= (p_START_t & start_t) | (p_START_t & start) | (p_START & start_t)
+        p_INIT_t <= (p_START_t & start_t) | (p_START_t & start) | (p_START & start_t);
         p_SHIFT_t <= p_INIT_t;
         p_START_t <= p_FINAL_t;
         bitCounter_t <= p_SHIFT_t;
