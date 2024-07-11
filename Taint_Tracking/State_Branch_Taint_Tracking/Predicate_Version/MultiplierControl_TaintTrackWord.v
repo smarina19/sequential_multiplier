@@ -104,6 +104,13 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
 
         if (rst) begin
 			p_START <= 1;
+            p_INIT <= 0;
+            p_SHIFT <= 0;
+            p_FINAL <= 0;
+            p_COUNT_DONE <= 0;
+            p_LN <= 0;
+            p_LOAD <= 0;
+            p_NOP <= 0;
             bitCounter <= 0;
 		end
 		
@@ -130,6 +137,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             else begin
                 p_NOP <= 1;
             end
+            bitCounter <= bitCounter + 1;
         end
         if (p_LN) begin
             if (p_COUNT_DONE) begin
@@ -142,7 +150,6 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
                 p_LOAD <= 0;
                 p_NOP <= 0;
             end
-            bitCounter <= bitCounter + 1;
         end
 
         p_INIT_t <= p_INIT_t | (p_START_t & start_t) | (p_START_t & start) | (p_START & start_t);
