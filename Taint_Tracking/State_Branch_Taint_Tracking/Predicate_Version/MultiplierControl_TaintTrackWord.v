@@ -55,13 +55,6 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
     reg p_COUNT_DONE_t;
     reg p_LN_t;
 
-	localparam START = 4'd0;
-	localparam INIT = 4'd1;
-    localparam SHIFT = 4'd2;
-    localparam NOP = 4'd3;
-    localparam LOAD = 4'd4;
-    localparam FINAL = 4'd5;
-
 	// Output Combinational Logic
 	always @( * ) begin
 		// Set defaults
@@ -129,7 +122,6 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             p_FINAL <= 0;
         end
         if (p_SHIFT) begin
-            bitCounter <= bitCounter + 1;
             p_SHIFT <= 0;
 
             if (multiplierReg[bitCounter]) begin
@@ -138,6 +130,7 @@ module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
             else begin
                 p_NOP <= 1;
             end
+            bitCounter <= bitCounter + 1;
         end
         if (p_LN) begin
             if (p_COUNT_DONE) begin
