@@ -2,7 +2,7 @@
 // Control Module for Sequential Multiplier
 //==============================================================================
 
-module MultiplierControl_TaintTrackWord #(parameter WIDTH = 4)(
+module MultiplierControl_TaintTrackBitwise #(parameter WIDTH = 4)(
 	// External Inputs
 	input   clk,           // Clock
     input   rst,           // reset
