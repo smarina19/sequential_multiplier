@@ -3,7 +3,7 @@
 //==============================================================================
 
 `include "MultiplierControl_TaintTrackBitwise.v"
-`include "../MultiplierDatapath_TaintTrack.v"
+`include "../../MultiplierDatapath_TaintTrack1Bit.v"
 
 module Multiplier_TaintTrackBitwise #(parameter WIDTH = 128)(
 	input   clk,
